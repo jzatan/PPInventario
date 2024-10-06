@@ -14,8 +14,5 @@ $table->foreignId('area_id')->constrained()->onDelete('cascade'); //Cada usuario
 php artisan make:controller /MAYUS-singular/ --resource
 php artisan make:controller usuarioController --resource
 
-// actualizar los cambios en tu repositorio de github
 
-git pull origin main
-git pull origin <nombre-de-la-rama>
 
