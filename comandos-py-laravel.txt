@@ -1,0 +1,21 @@
+// crear migraciones
+php artisan make:model /singular/ -m
+php artisan make:model usuario -m
+
+
+// migrar a la base de datos
+php artisan migrate
+
+Cod de IDS Migraciones:
+
+$table->foreignId('area_id')->constrained()->onDelete('cascade'); //Cada usuario en la tabla usuarios estará asociado con un área (almacenado en area_id), y si el área asociada es eliminada, los usuarios correspondientes también serán eliminados para mantener la consistencia de los datos.
+
+// crear controladores para cada modelo
+php artisan make:controller /MAYUS-singular/ --resource
+php artisan make:controller usuarioController --resource
+
+// actualizar los cambios en tu repositorio de github
+
+git pull origin main
+git pull origin <nombre-de-la-rama>
+

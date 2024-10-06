@@ -1,5 +1,0 @@
-// crear migraciones
-php artisan make:model /singular/ -m
-
-// migrar a la base de datos
-php artisan migrate
