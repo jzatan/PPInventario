@@ -1,0 +1,14 @@
+
+//guardar cambios en el repositorio
+git add .
+git status
+git commit -m "nombre-del-avance"
+git push
+
+
+
+
+// actualizar los cambios en tu repositorio de github
+
+git pull origin main
+git pull origin <nombre-de-la-rama>
