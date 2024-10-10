@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class area extends Model
 {
     use HasFactory;
+
+    // permite guardar registro con id
+    protected $guarded = ['id'];
+
+    public function usuarios(){
+        return $this->belongsTo(usuario::class);
+    }
 }

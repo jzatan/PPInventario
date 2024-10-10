@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/usuario', function () {
+    return view('auth.registro-usuarios');
+});
+
+
+Route::get('/template', function () {
+    return view('template');
+});
+
+Route::get('/carnicero', function () {
+    return view('prueba-plantilla');
+});
+
+
+// crear rutas para usuarios
+ Route::resource('usuarios',usuarioController::class);

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class componente extends Model
 {
     use HasFactory;
+
+    public function equipos(){
+        return $this->belongsTo(equipo::class);
+    }
+
 }

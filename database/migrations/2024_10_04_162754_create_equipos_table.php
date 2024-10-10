@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
+            $table->foreignId('usuario_id')->constrained()->onDelete('cascade');
             $table->string('nombre_equipo', 255);
             $table->string('marca', 30);
             $table->string('modelo', 30);

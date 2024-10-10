@@ -75,6 +75,7 @@ CREATE TABLE `componentes` (
 CREATE TABLE `equipos` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `categoria_id` bigint(20) UNSIGNED NOT NULL,
+  `usuario_id` bigint(20) UNSIGNED NOT NULL,
   `nombre_equipo` varchar(255) NOT NULL,
   `marca` varchar(30) NOT NULL,
   `modelo` varchar(30) NOT NULL,
