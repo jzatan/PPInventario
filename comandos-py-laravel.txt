@@ -14,5 +14,62 @@ $table->foreignId('area_id')->constrained()->onDelete('cascade'); //Cada usuario
 php artisan make:controller /MAYUS-singular/ --resource
 php artisan make:controller usuarioController --resource
 
+// listar rutas
+php artisan route:list
+
+// crear controladores para cada modelo
+php artisan make:controller <name-tabla>Controller --resource
+php artisan make:controller usuarioController --resource
+
+// archivo que almacenara (store) los datos de los formularios y los enviara a la DB
+
+php artisan make:request store<name-tabla>request
+php artisan make:request storeUsuariosrequest
 
 
+//seeders (permiten cargar regitros o algunos datos predeterminados en las distintas tbls de la bd)
+// Crear seeders
+PASO 1.
+php artisan make:seeder <Nombre-tabla>Seeder
+php artisan make:seeder CategoriaSeeder
+
+PASO 4.
+php artisan db:seed (enviamos los registros del seeder a la bd)
+
+
+
+// directivas o herencia de plantillas
+primero deber ubicarlas en la plantilla
+ <title>Argon Dashboard  - @yield('title') </title>
+ @stack('css') - abajo del css
+ @yield('content') - dentro del main
+ @stack('js') - abajo del js
+
+En Laravel, esas directivas y normativas son comunes en las vistas Blade. Te explico cada una de ellas:
+
+1. **@extends('template')**: 
+   - Sirve para indicar que esta vista hereda de otra plantilla base llamada `template`. Esta plantilla 
+   base contiene una estructura HTML común que se reutiliza en diferentes vistas, como el header, el footer, 
+   el layout general, etc.
+
+2. **@section('title','prueba-plantilla')**: 
+   - Define el contenido de la sección `title` de la plantilla. Esta sección, comúnmente, se utiliza para 
+   definir el título de la página que aparece en la pestaña del navegador.
+
+3. **@push('css')**: 
+   - Crea una pila (stack) de archivos CSS. En este caso, puedes agregar estilos adicionales desde cualquier 
+   otra vista que extienda esta plantilla. Estos archivos CSS se agregarán en la sección correspondiente de 
+   la plantilla donde hayas usado `@stack('css')`.
+
+4. **@section('content')**: 
+   - Define el contenido principal que será renderizado en la vista. Todo lo que esté dentro 
+   de `@section('content')` y `@endsection` será inyectado en la plantilla base en el lugar donde se haya 
+   definido la sección `content`.
+
+5. **@push('js')**: 
+   - Similar a `@push('css')`, esto permite agregar archivos JavaScript a una pila. Los archivos JavaScript 
+   que se empujen con esta directiva se agregarán al final de la vista, en el lugar donde esté la 
+   directiva `@stack('js')` dentro de la plantilla.
+
+Estas directivas permiten organizar y reutilizar el código en diferentes vistas de manera eficiente, 
+siguiendo el patrón de diseño de **herencia de plantillas**.
