@@ -108,7 +108,7 @@
                                                 <div class="modal-body p-0">
                                                     <div class="card-header pb-0 text-left">
                                                         <h3 class="font-weight-bolder text-info text-gradient">Registrar usuario</h3>
-                                                        <p class="mb-0">Enter your email and password to sign in</p>
+                                                        <p class="mb-0">Ingrese la información solicitada en cada campo</p>
                                                     </div>
                                                     <div class="card-body">
                                                         <form id="" action="{{route('usuarios.store')}}" method="post">
@@ -143,15 +143,28 @@
                                                             </div>
 
                                                             <div class="form-group row">
-                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="usuario"> Usuario:</label>
-                                                                    <input type="text" class="form-control" id="usuario" name="usuario" title="Ingrese telefono" placeholder="Crear usuario" required>
-                                                                </div>
-                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="contraseña"> contraseña:</label>
-                                                                    <input type="text" class="form-control" id="contraseña" name="contraseña" title="max 8 digitos" placeholder="contraseña" required>
-                                                                </div>
-                                                            </div>
+
+
+                                                            <div class="form-group row">
+    <div class="col-sm-6">
+        <label for="usuario">Usuario:</label>
+        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Crear usuario" required>
+    </div>
+    <div class="col-sm-6">
+        <label for="contraseña">Contraseña:</label>
+        <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+        <div id="contraseña-error" class="alert alert-danger mt-2" style="display:none; color:white;">
+            <strong>¡Atención!</strong> Solo se permiten 8 caracteres.
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('contraseña').addEventListener('input', function() {
+    document.getElementById('contraseña-error').style.display = this.value.length > 8 ? 'block' : 'none';
+});
+</script>
+
 
                                                             <div>
                                                                 <button type="submit" class="btn btn-primary-personal btn-eventos btn-block">Guardar</button>
