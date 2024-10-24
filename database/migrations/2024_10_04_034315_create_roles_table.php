@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('nombre_rol',50);
             $table->string('descripcion',250);
             $table->tinyInteger('estado')->default(1);
-            $table->timestamps();
+            $table->timestamps(); 
+            
+            
+            
         });
     }
 

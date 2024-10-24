@@ -4,6 +4,9 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+
+ 
 :root {
   --bs-blue: #63B3ED;
   --bs-indigo: #596CFF;
@@ -3468,7 +3471,7 @@ textarea.form-control.is-valid {
   width: 100%;
   margin-top: 0.25rem;
   font-size: 0.875em;
-  color: #fd5c70;
+  color: #ff0000;
 }
 
 .invalid-tooltip {

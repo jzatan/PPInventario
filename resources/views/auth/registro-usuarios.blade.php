@@ -1,17 +1,21 @@
 <!--LLamas a las normativas de la plantilla template-->
 @extends('template')
 
-@section('title','prueba-plantilla')
+@section('title','Usuarios')
 
 @push('css')
 
 @endpush
+
+@section('header-nav', 'Usuarios')
+@section('header', 'Usuarios')
 
 @section('content')
 <!--Contenido-->
 
 
 <div class="container-fluid py-4">
+
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -26,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos personales</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Area</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Area de trabajo</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">credenciales</th>
                                     <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
                                     <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
@@ -38,7 +42,7 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-                                                <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                                <img src="../assets/img/usuario.png" class="avatar avatar-sm me-3" alt="user1">
                                             </div>
                                             <div class=" d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{$usuario->nombres ?? ''}} {{$usuario->apellidos}}</h6>
@@ -58,14 +62,15 @@
                                         @if ($usuario->estado==1)
                                         <span class="fw-bolder p-1 rounded bg-success text-white d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Activo</span>
                                         @else
-                                        <span class="fw-bolder p-1 rounded bg-danger text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Inactivo</span>
+                                        <span class="fw-bolder p-1 rounded bg-danger text-white d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Inactivo</span>
                                         @endif
                                     </td>
 
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <form action="">
-                                                <button type="button" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-info text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Control de pagos"><i class="fas fa-pen"></i></button>
+                                            <form action="{{route ('usuarios.edit', ['usuario' => $usuario])}}" method="get">
+                                                @csrf
+                                                <button type="submit" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-info text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Control de pagos"><i class="fas fa-pen"></i></button>
                                             </form>
 
                                             <form action="" method="post">
@@ -108,13 +113,12 @@
                                                 <div class="modal-body p-0">
                                                     <div class="card-header pb-0 text-left">
                                                         <h3 class="font-weight-bolder text-info text-gradient">Registrar usuario</h3>
-                                                        <p class="mb-0">Ingrese la información solicitada en cada campo</p>
                                                     </div>
                                                     <div class="card-body">
-                                                        <form id="" action="{{route('usuarios.store')}}" method="post">
+                                                        <form id="userForm" action="{{route('usuarios.store')}}" method="post">
                                                             @csrf
                                                             <div class="form-group">
-                                                                <label for="area_id">Area:</label>
+                                                                <label for="area_id">ÁREA DE TRABAJO</label>
                                                                 <!-- Llamamos a las areas en estado 1 = activos-->
                                                                 <select class="form-control" id="area_id" name="area_id">
                                                                     @foreach ($areas as $item)
@@ -122,65 +126,52 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="nombres"> Nombres:</label>
-                                                                <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="nombres de usuario" oninput="soloLetrasNumeros(this)" required>
+
+                                                            <div class="form-group row">
+                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
+                                                                    <label for="usuario">USUARIO</label>
+                                                                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="example@user" required maxlength="30" oninput="validateUsuario()" required>
+                                                                    <div id="usuarioMessage" class="invalid-feedback"></div>
+                                                                </div>
+                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
+                                                                    <label for="contraseña">CONTRASEÑA</label>
+                                                                    <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Crear contraseña" required minlength="8" maxlength="8" oninput="validatePassword()" required>
+                                                                    <div id="contraseña-error" class="invalid-feedback">
+                                                                        La contraseña debe tener exactamente 8 caracteres.
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="apellidos"> Apellidos:</label>
-                                                                <input type="text" class="form-control" id="apellidos" name="apellidos" title="Formato Fecha" placeholder="Ingresar la apellidos" required>
+                                                                <label for="nombres"> NOMBRES DEL USUARIO</label>
+                                                                <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="Ingrese nombres de usuario" oninput="validateNombres(this)" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="apellidos"> APELLIDOS DEL USUARIO</label>
+                                                                <input type="text" class="form-control" id="apellidos" name="apellidos" title="Formato Fecha" placeholder="Ingrese apellidos de usuario" oninput="validateApellidos()" required>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="dni"> Documento de identidad:</label>
-                                                                    <input type="text" class="form-control" id="dni" name="dni" title="Formato Fecha" placeholder="Ingresar dni" oninput="soloLetras(this)" required>
+                                                                    <label for="dni">DOCUMENTO DE IDENTIDAD (DNI)</label>
+                                                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese DNI" required maxlength="8" pattern="\d{8}" oninput="validateDNI()">
+                                                                    <div id="dni-error" class="invalid-feedback">
+                                                                        El DNI debe tener 8 dígitos numéricos.
+                                                                    </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="telefono"> Telefono:</label>
-                                                                    <input type="text" class="form-control" id="telefono" name="telefono" title="Ingrese telefono" placeholder="Ingrese telefono" required>
+                                                                    <label for="telefono">TELÉFONO</label>
+                                                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="999-999-999" required maxlength="9" pattern="\d{9}" oninput="validateTelefono()">
+                                                                    <div id="telefono-error" class="invalid-feedback">
+                                                                        El teléfono debe tener 8 dígitos numéricos.
+                                                                    </div>
                                                                 </div>
-
                                                             </div>
-
-                                                            <div class="form-group row">
-
-
-                                                            <div class="form-group row">
-    <div class="col-sm-6">
-        <label for="usuario">Usuario:</label>
-        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Crear usuario" required>
-    </div>
-    <div class="col-sm-6">
-        <label for="contraseña">Contraseña:</label>
-        <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña" required>
-        <div id="contraseña-error" class="alert alert-danger mt-2" style="display:none; color:white;">
-            <strong>¡Atención!</strong> Solo se permiten 8 caracteres.
-        </div>
-    </div>
-</div>
-
-<script>
-document.getElementById('contraseña').addEventListener('input', function() {
-    document.getElementById('contraseña-error').style.display = this.value.length > 8 ? 'block' : 'none';
-});
-</script>
-
-
-                                                            <div>
-                                                                <button type="submit" class="btn btn-primary-personal btn-eventos btn-block">Guardar</button>
-                                                            </div>
-
-                                                            <!---<a href="index.html" class="btn btn-primary btn-ciclos btn-block">
-                                            Login
-                                        </a>-->
                                                             <hr>
+                                                            <div class="d-flex flex-column justify-content-end">
+                                                                <button type="submit" class="btn btn-primary btn-eventos btn-block">Registrar</button><br>
 
+                                                            </div>
                                                         </form>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -198,5 +189,6 @@ document.getElementById('contraseña').addEventListener('input', function() {
 @endsection
 
 @push('js')
+<script src="{{asset ('assets/js/imputs-validations.js')}}"></script>
 
 @endpush

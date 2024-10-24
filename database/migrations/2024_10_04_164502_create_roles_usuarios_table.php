@@ -18,8 +18,7 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained()->onDelete('cascade');
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
             $table->tinyInteger('estado')->default(1);
-            $table->timestamps();
-        });
+            $table->timestamps();        });
     }
 
     /**

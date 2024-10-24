@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeUsuariosrequest;
+use App\Http\Requests\updateUsuariosrequest;
 use App\Models\area;
 use App\Models\usuario;
 use Exception;
@@ -78,9 +79,13 @@ class usuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(usuario $usuario)
     {
-        //
+        $areas = area::where('estado',1)->get();
+        // abrira la vista update-usuarios, enviando los datos con el id
+        return view('auth.update-usuarios',['usuario' => $usuario], compact('areas'));
+
+       
     }
 
     /**
@@ -90,9 +95,18 @@ class usuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updateUsuariosrequest $request, usuario $usuario)
     {
-        //
+        //dd($request);
+        try{
+            DB::beginTransaction();
+            $usuario -> update($request -> validated());
+            DB::commit();
+            return redirect()->route('usuarios.index');
+        } catch (Exception $e){
+            DB::rollBack();
+            return redirect()->route('usuarios.index');
+        }
     }
 
     /**
@@ -113,5 +127,14 @@ class usuarioController extends Controller
             return redirect()->route('usuarios.index');
 
         }
+    }
+
+    // Funcion que me permitira validar en tiempo real si el nombre de usuario existe
+
+    public function verificarusuario(Request $request){
+        $usuario = $request -> query('usuario');
+        $exists = usuario::where('usuario', $usuario) -> exists();
+        return response() -> json(['exists' => $exists]);
+
     }
 }

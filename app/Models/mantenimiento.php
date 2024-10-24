@@ -20,4 +20,8 @@ class mantenimiento extends Model
     public function equipos(){
         return $this->belongsTo(equipo::class);
     }
+
+    public function mantenimiento_detalles(){
+        return $this->hasOne(mantenimiento_detalle::class);
+    }
 }

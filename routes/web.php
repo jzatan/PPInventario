@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\componenteController;
+use App\Http\Controllers\equipoController;
 use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,19 +20,22 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/usuario', function () {
-    return view('auth.registro-usuarios');
-});
 
+// Ruta para verficicar en tiempo real el nombre de usuario registrado mediante AJAX
+Route::get('/verificar-usuario', [usuarioController::class, 'verificarusuario']);
 
-Route::get('/template', function () {
-    return view('template');
-});
+// Ruta para verficicar en tiempo real el cod_registro registrado mediante AJAX
+Route::get('/verificar-codregistro', [equipoController::class, 'verificarcodregistro']);
+
 
 Route::get('/carnicero', function () {
-    return view('prueba-plantilla');
+    return view('activos-informaticos.registro-equipos');
 });
 
 
 // crear rutas para usuarios
  Route::resource('usuarios',usuarioController::class);
+ // crear rutas para equipos
+ Route::resource('equipos',equipoController::class);
+  // crear rutas para componentes
+  Route::resource('componentes',componenteController::class);

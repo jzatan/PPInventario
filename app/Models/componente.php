@@ -9,8 +9,10 @@ class componente extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function equipos(){
-        return $this->belongsTo(equipo::class);
+        return $this->belongsTo(equipo::class, 'equipo_id');
     }
 
 }

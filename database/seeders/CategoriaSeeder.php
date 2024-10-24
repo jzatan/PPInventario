@@ -15,7 +15,8 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
-        // aqui colocas la logica de la tabla
+        // PASO 2
+        // aqui colocas la logica de la tabla, luego te diriges al archivo DatabaseSeeder.php
         categoria::insert([
             [
                 'nombre_categoria' => 'Dispositivos de Entrada'

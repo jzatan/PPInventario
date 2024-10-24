@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class equipo extends Model
 {
     use HasFactory;
+    
+    protected $guarded = ['id'];
 
     public function usuarios(){
-        return $this->belongsTo(usuario::class);
+        return $this->belongsTo(usuario::class,'usuario_id');
 }
 
     public function mantenimientos(){
@@ -26,7 +28,7 @@ class equipo extends Model
 }
 
     public function categorias(){
-        return $this->belongsTo(categoria::class);
+        return $this->belongsTo(categoria::class,'categoria_id');
     }
 
 }
