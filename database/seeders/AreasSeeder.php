@@ -31,11 +31,6 @@ class AreasSeeder extends Seeder
                 'ubicacion' => 'DSRMH - 3ER PISO - JR CUZCO 208'
             ],
 
-            [
-                'nombre_area' => 'INFORMATICA',
-                'ubicacion' => 'DSRMH - 4TO PISO - JR CUZCO 208'
-            ]
-
         ]);
     }
 }

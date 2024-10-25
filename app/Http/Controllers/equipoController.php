@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeEquiposrequest;
+use App\Http\Requests\updateEquiposrequest;
 use App\Models\categoria;
 use App\Models\componente;
 use App\Models\equipo;
@@ -86,9 +87,11 @@ class equipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(equipo $equipo)
     {
-        //
+        $usuarios = usuario::where('estado', 1)->get();
+        $categorias = categoria::get();
+        return view('activos-informaticos.update-activos-informaticos',['equipo' => $equipo], compact('usuarios', 'categorias'));
     }
 
     /**
@@ -98,9 +101,19 @@ class equipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updateEquiposrequest $request, equipo $equipo)
     {
         //
+        //dd($request);
+        try{
+            DB::beginTransaction();
+            $equipo -> update($request -> validated());
+            DB::commit();
+            return redirect()->route('equipos.index');
+        } catch (Exception $e){
+            DB::rollBack();
+            return redirect()->route('equipos.index');
+        }
     }
 
     /**

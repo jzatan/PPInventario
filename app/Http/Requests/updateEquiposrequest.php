@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeEquiposrequest extends FormRequest
+class updateEquiposrequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,15 @@ class storeEquiposrequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
+        $equipo = $this->route('equipo');
+        $equipoid = $equipo->id;
         return [
             //
             'categoria_id' => 'required',
             'usuario_id' => 'required',
-            'nombre_equipo' => 'required|max:255',
+            'nombre_equipo' => 'required|max:255,'.$equipoid,
             'marca' => 'required|max:30',
             'modelo' => 'required|max:30',
             'color' => 'required|max:30',

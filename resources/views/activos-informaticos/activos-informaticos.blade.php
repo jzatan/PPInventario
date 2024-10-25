@@ -46,10 +46,14 @@
                             <thead>
                                 <tr>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">COD. REGISTRO</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ORD. COMPRA</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">EQUIPO INFORMATICO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">MARCA - modelo</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">COLOR</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">NRO. SERIE</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">FECHA ADQUISION</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">estado</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">OBSERVACIONES</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ACCIONES</th>
                                 </tr>
                             </thead>
@@ -60,6 +64,9 @@
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> cod_registro}}</h6>
                                     </td>
                                     <td>
+                                        <h6 class="text-center text-sm mb-0">{{$equipo -> ord_compra ?? 'SIN ORDEN DE COMPRA'}}</h6>
+                                    </td>
+                                    <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> nombre_equipo}}</h6>
                                     </td>
                                     <td>
@@ -68,7 +75,13 @@
                                         </a>
                                     </td>
                                     <td>
+                                        <h6 class="text-center text-sm mb-0">{{$equipo -> color}}</h6>
+                                    </td>
+                                    <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> nro_serie}}</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="text-center text-sm mb-0">{{\Carbon\Carbon::parse($equipo -> fecha_adquision)->format('d-m-Y')}}</h6>
                                     </td>
                                     <!--@if ($equipo->estado==1)
                                         <span class="fw-bolder p-1 rounded bg-success text-white d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Activo</span>
@@ -77,23 +90,26 @@
                                         @endif-->
                                     <td class="align-middle text-center text-sm">
                                         @if ($equipo->estado == 0)
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-success d-flex justify-content-center align-items-center">BUENA</span></a>
+                                        <span class="badge bg-success d-flex justify-content-center align-items-center">BUENA</span>
                                         @elseif ($equipo->estado == 1)
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-success d-flex justify-content-center align-items-center">OPERATIVA</span></a>
+                                        <span class="badge bg-success d-flex justify-content-center align-items-center">OPERATIVA</span>
                                         @elseif ($equipo->estado == 2)
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-warning d-flex justify-content-center align-items-center">REGULAR</span></a>
+                                        <span class="badge bg-warning d-flex justify-content-center align-items-center">REGULAR</span>
                                         @elseif ($equipo->estado == 3)
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-danger d-flex justify-content-center align-items-center">MALA</span></a>
+                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">MALA</span>
                                         @elseif ($equipo->estado == 4)
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-danger d-flex justify-content-center align-items-center">INOPERATIVA</span></a>
+                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">INOPERATIVA</span>
                                         @else
-                                        <a href="" title="Observaciones: {{$equipo -> observacion}}"><span class="badge bg-light d-flex justify-content-center align-items-center">ESTADO DESCONOCIDO</span></a>
+                                        <span class="badge bg-light d-flex justify-content-center align-items-center">ESTADO DESCONOCIDO</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <h6 class="text-center text-sm mb-0">{{$equipo -> observacion ?? 'SIN OBSERVACIONES'}}</h6>
                                     </td>
                                     <td>
                                         <div class="ms-auto text-center">
                                             <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-tools me-2"></i></a>
-                                            <a class="btn btn-link text-info px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-info me-2" aria-hidden="true"></i></a>
+                                            <a class="btn btn-link text-info px-3 mb-0" href="{{route ('equipos.edit', ['equipo' => $equipo])}}"><i class="fas fa-pencil-alt text-info me-2" aria-hidden="true"></i></a>
                                             <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal"><i class="far fa-trash-alt me-2"></i></a>
                                         </div>
                                     </td>
@@ -236,7 +252,7 @@
 @endsection
 
 @push('js')
-
+<!-- Script que permite buscar los equipos registrados -->
 <script>
     var busqueda = document.getElementById('buscar');
     var table = document.getElementById("tabla-resultado").tBodies[0];
@@ -255,48 +271,54 @@
 </script>
 
 <script src="{{asset ('assets/js/equipos-informaticos.js')}}"></script>
-
+<!-- Script para descargar PDF -->
 <script>
-document.getElementById('exportar-pdf').addEventListener('click', function() {
-    // Obtener los datos de la tabla
-    var tabla = document.getElementById('tabla-resultado');
+    document.getElementById('exportar-pdf').addEventListener('click', function() {
 
-    // Crear un array para almacenar las cabeceras
-    var cabeceras = [];
-    // Tomamos las cabeceras de la tabla, excepto la columna de "Acciones"
-    var headers = tabla.rows[0].cells;
-    for (var i = 0; i < headers.length - 1; i++) {  // Nota el "-1" para omitir la última columna
-        cabeceras.push(headers[i].innerText.trim());
-    }
+        // Obtener los datos de la tabla
+        var tabla = document.getElementById('tabla-resultado');
 
-    // Crear un array para almacenar los datos de las filas
-    var data = [];
-    
-    // Recorrer las filas de la tabla
-    for (var i = 1, row; row = tabla.rows[i]; i++) {
-        var fila = [];
-        // Recorrer las celdas de cada fila (omitimos la última columna "Acciones")
-        for (var j = 0; j < row.cells.length - 1; j++) {
-            fila.push(row.cells[j].innerText.trim());
+        // Crear un array para almacenar las cabeceras
+        var cabeceras = [];
+        // Tomamos las cabeceras de la tabla, excepto la columna de "Acciones"
+        var headers = tabla.rows[0].cells;
+        for (var i = 0; i < headers.length - 1; i++) { // Nota el "-1" para omitir la última columna
+            cabeceras.push(headers[i].innerText.trim());
         }
-        data.push(fila); // Guardar la fila en los datos
-    }
 
-    // Crear un nuevo documento PDF
-    var { jsPDF } = window.jspdf;
-    var doc = new jsPDF();
+        // Crear un array para almacenar los datos de las filas
+        var data = [];
 
-    // Generar tabla con jsPDF-AutoTable
-    doc.autoTable({
-        head: [cabeceras],  // Cabeceras de la tabla
-        body: data,         // Datos de la tabla
-        theme: 'grid'       // Estilo de tabla
+        // Recorrer las filas de la tabla
+        for (var i = 1, row; row = tabla.rows[i]; i++) {
+            var fila = [];
+            // Recorrer las celdas de cada fila (omitimos la última columna "Acciones")
+            for (var j = 0; j < row.cells.length - 1; j++) {
+                fila.push(row.cells[j].innerText.trim());
+            }
+            data.push(fila); // Guardar la fila en los datos
+        }
+
+        // Crear un nuevo documento PDF en orientación horizontal
+        var {
+            jsPDF
+        } = window.jspdf;
+        var doc = new jsPDF({
+            orientation: 'landscape'
+        });
+
+        // Generar tabla con jsPDF-AutoTable
+        doc.autoTable({
+            head: [cabeceras], // Cabeceras de la tabla
+            body: data, // Datos de la tabla
+            theme: 'grid' // Estilo de tabla
+        });
+
+        // Guardar el PDF
+        doc.save('equipos_informaticos.pdf');
     });
-
-    // Guardar el PDF
-    doc.save('equipos_informaticos.pdf');
-});
 </script>
+
 
 
 @endpush

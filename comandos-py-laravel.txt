@@ -29,7 +29,7 @@ php artisan make:request storeUsuariosrequest
 
 // archivo que permitira actualizar los datos de un registro hecho pero se necestan almacenar en:
 
-php artisan make request update<name-tabla>request
+php artisan make:request update<name-tabla>request
 
 //seeders (permiten cargar regitros o algunos datos predeterminados en las distintas tbls de la bd)
 // Crear seeders

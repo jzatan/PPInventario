@@ -69,7 +69,6 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                             <form action="{{route ('usuarios.edit', ['usuario' => $usuario])}}" method="get">
-                                                @csrf
                                                 <button type="submit" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-info text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Control de pagos"><i class="fas fa-pen"></i></button>
                                             </form>
 
