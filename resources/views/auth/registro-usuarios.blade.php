@@ -74,12 +74,12 @@
 
                                             <form action="" method="post">
                                                 <!--<button type="button" class="d-flex btn btn-danger " title="Control de pagos"><i class="fas fa-trash"></i></button>-->
-                                                <button type="button" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-danger text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Eliminar usuario" data-bs-toggle="modal" data-bs-target="#deleteeModal"><i class="fas fa-trash"></i></button>
+                                                <button type="button" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-danger text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Eliminar usuario" data-bs-toggle="modal" data-bs-target="#deleteeModal-{{$usuario -> id}}"><i class="fas fa-trash"></i></button>
                                             </form>
                                         </div>
                                     </td>
                                     <!--- Warning delete -->
-                                    <div class="modal fade" id="deleteeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="deleteeModal-{{$usuario -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">

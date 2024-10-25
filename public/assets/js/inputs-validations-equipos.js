@@ -80,7 +80,7 @@ function validateNROSERIE() {
     return isValid; // Devuelve el estado de validación
 }
 
-document
+/*document
     .getElementById("formEquipos")
     .addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevenir el envío inmediato
@@ -116,7 +116,7 @@ document
 
             this.submit(); // Enviar el formulario al backend
         }
-    });
+    }); */
 
 document.getElementById("formEquipos-update").addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevenir el envío inmediato

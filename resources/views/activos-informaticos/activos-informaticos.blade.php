@@ -110,13 +110,13 @@
                                         <div class="ms-auto text-center">
                                             <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-tools me-2"></i></a>
                                             <a class="btn btn-link text-info px-3 mb-0" href="{{route ('equipos.edit', ['equipo' => $equipo])}}"><i class="fas fa-pencil-alt text-info me-2" aria-hidden="true"></i></a>
-                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal"><i class="far fa-trash-alt me-2"></i></a>
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal-{{$equipo->id}}"><i class="far fa-trash-alt me-2"></i></a>
                                         </div>
                                     </td>
                                 </tr>
 
                                 <!-- WARNING DELETE EQUIPOS -->
-                                <div class="modal fade" id="deleteEquipoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="deleteEquipoModal-{{$equipo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
