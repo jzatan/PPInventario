@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\componenteController;
 use App\Http\Controllers\equipoController;
+use App\Http\Controllers\prestamoController;
 use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +35,10 @@ Route::get('/carnicero', function () {
 
 
 // crear rutas para usuarios
- Route::resource('usuarios',usuarioController::class);
- // crear rutas para equipos
- Route::resource('equipos',equipoController::class);
-  // crear rutas para componentes
-  Route::resource('componentes',componenteController::class);
+Route::resource('usuarios', usuarioController::class);
+// crear rutas para equipos
+Route::resource('equipos', equipoController::class);
+// crear rutas para componentes
+Route::resource('componentes', componenteController::class);
+// crear rutas para prestamos
+Route::resource('prestamos', prestamoController::class);

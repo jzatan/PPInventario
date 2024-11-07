@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeEquiposrequest;
+use App\Http\Requests\updateComponentesrequest;
 use App\Models\componente;
 use App\Models\equipo;
 use Exception;
@@ -93,9 +94,18 @@ class componenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updateComponentesrequest $request, componente $componente)
     {
-        //
+        //dd($request);
+        try {
+            DB::beginTransaction();
+            $componente->update($request->validated());
+            DB::commit();
+            return redirect()->route('equipos.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('equipos.index');
+        }
     }
 
     /**
@@ -107,5 +117,14 @@ class componenteController extends Controller
     public function destroy($id)
     {
         //
+        try{
+            $componente = componente::findOrFail($id);
+            $componente -> delete();
+            return redirect()->route('equipos.index');
+
+        }catch(Exception $e){
+            return redirect()->route('equipos.index');
+
+        }
     }
 }
