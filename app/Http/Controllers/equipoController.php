@@ -28,6 +28,16 @@ class equipoController extends Controller
         return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos'));
     }
 
+
+    // ruta que me permite visualizar los activos informaticos disponibles
+
+    public function activosdisponibles()
+    {
+        $equipos = equipo::whereIn('estado', [1,2])->get();
+        $componentes = componente::with('equipos')->get();
+        return view('prestamos.prestamo-activos', compact('componentes', 'equipos'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -62,12 +72,12 @@ class equipoController extends Controller
             if ($request->input('action') === 'register_and_redirect') {
                 return redirect()->route('componentes.create')->with('success', 'Equipo registrado exitosamente.');
             }
-            } catch (Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('Error al registrar el equipo.')->withInput();
-            }
-            // Redirigir a la vista de creación de equipos por defecto
-            return redirect()->route('equipos.index')->with('success', 'Equipo registrado exitosamente.'); 
+        }
+        // Redirigir a la vista de creación de equipos por defecto
+        return redirect()->route('equipos.index')->with('success', 'Equipo registrado exitosamente.');
     }
 
     /**
@@ -91,7 +101,7 @@ class equipoController extends Controller
     {
         $usuarios = usuario::where('estado', 1)->get();
         $categorias = categoria::get();
-        return view('activos-informaticos.update-activos-informaticos',['equipo' => $equipo], compact('usuarios', 'categorias'));
+        return view('activos-informaticos.update-activos-informaticos', ['equipo' => $equipo], compact('usuarios', 'categorias'));
     }
 
     /**
@@ -105,12 +115,12 @@ class equipoController extends Controller
     {
         //
         //dd($request);
-        try{
+        try {
             DB::beginTransaction();
-            $equipo -> update($request -> validated());
+            $equipo->update($request->validated());
             DB::commit();
             return redirect()->route('equipos.index');
-        } catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->route('equipos.index');
         }
@@ -125,25 +135,23 @@ class equipoController extends Controller
     public function destroy($id)
     {
         //
-         //
-         try{
+        //
+        try {
             $equipo = equipo::findOrFail($id);
-            $equipo -> delete();
+            $equipo->delete();
             return redirect()->route('equipos.index');
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->route('equipos.index');
-
         }
     }
 
 
-      // Funcion que me permitira validar en tiempo real si el cod_registro existe
+    // Funcion que me permitira validar en tiempo real si el cod_registro existe
 
-      public function verificarcodregistro(Request $request){
-        $codregistro = $request -> query('cod_registro');
-        $exists = equipo::where('cod_registro', $codregistro) -> exists();
-        return response() -> json(['exists' => $exists]);
-
+    public function verificarcodregistro(Request $request)
+    {
+        $codregistro = $request->query('cod_registro');
+        $exists = equipo::where('cod_registro', $codregistro)->exists();
+        return response()->json(['exists' => $exists]);
     }
 }

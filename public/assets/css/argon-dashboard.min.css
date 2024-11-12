@@ -8729,6 +8729,10 @@ fieldset:disabled .btn {
 .bg-primary {
     background-color: #5e72e4 !important;
 }
+.bg-primary-menu{
+background-color: #4723D9 !important;
+}
+
 .bg-secondary {
     background-color: #8392ab !important;
 }

@@ -35,15 +35,15 @@
                         <div class="col d-flex justify-content-end">
                             <a class="btn btn-white" id="exportar-pdf"><i class="fas fa-file-pdf  text-danger me-2" aria-hidden="true"></i>PDF</a>
                             <a class="btn btn-white" id="exportar-excel"><i class="fa fa-solid fa-file-excel text-success me-2" aria-hidden="true"></i>EXCEL</a>
-                            <a class="btn btn-white" href="{{route ('equipos.create')}}"><i class="fa fa-cloud-upload-alt text-primary me-2" aria-hidden="true"></i>REGISTRAR EQUIPOS</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-2">
-                        <table id="tabla-equipos" class="table table-bordered align-items-center mb-0">
+                        <table id="tabla-equipos" class="table table-responsive align-items-center mb-0">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">COD. REGISTRO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ORD. COMPRA</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ACTIVO INFORMATICO</th>
@@ -59,13 +59,20 @@
                                 @foreach ($equipos as $equipo)
                                 <tr>
                                     <td>
+                                        <div class="ms-auto text-center">
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="" title="DETALLES" data-bs-toggle="modal" data-bs-target="#componentesModal-{{$equipo->id}}">
+                                                <i class="fas fa-info-circle text-dark"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> cod_registro}}</h6>
                                     </td>
                                     <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> ord_compra ?? 'SIN ORDEN DE COMPRA'}}</h6>
                                     </td>
                                     <td>
-                                        <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> nombre_equipo ?? ''}} - {{$equipo -> marca ?? ''}} - {{$equipo -> modelo ?? ''}}</h6>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> nombre_equipo ?? ''}} {{$equipo -> marca ?? ''}} {{$equipo -> modelo ?? ''}}</h6>
                                     </td>
                                     <td>
                                         <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> color ?? ''}}</h6>
@@ -77,18 +84,16 @@
                                         <h6 class="resultado text-center text-sm mb-0"></h6>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if ($equipo->estado == 0)
-                                        <span class="badge bg-success d-flex justify-content-center align-items-center">BUENA</span>
-                                        @elseif ($equipo->estado == 1)
-                                        <span class="badge bg-success d-flex justify-content-center align-items-center">OPERATIVA</span>
+                                        @if ($equipo->estado == 1)
+                                        <span class="badge bg-success">OPERATIVA</span>
                                         @elseif ($equipo->estado == 2)
-                                        <span class="badge bg-warning d-flex justify-content-center align-items-center">REGULAR</span>
+                                        <span class="badge bg-warning">REGULAR</span>
                                         @elseif ($equipo->estado == 3)
-                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">MALA</span>
+                                        <span class="badge bg-danger">INOPERATIVA</span>
                                         @elseif ($equipo->estado == 4)
-                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">INOPERATIVA</span>
+                                        <span class="badge bg-info">EN MANTENIMIENTO</span>
                                         @else
-                                        <span class="badge bg-light d-flex justify-content-center align-items-center">ESTADO DESCONOCIDO</span>
+                                        <span class="badge bg-light">ESTADO DESCONOCIDO</span>
                                         @endif
                                     </td>
                                     <td>
@@ -96,9 +101,6 @@
                                     </td>
                                     <td>
                                         <div class="ms-auto text-center">
-                                            <a class="btn btn-link text-dark px-3 mb-0" href="" title="DETALLES" data-bs-toggle="modal" data-bs-target="#componentesModal-{{$equipo->id}}">
-                                                <i class="fas fa-eye text-primary"></i>
-                                            </a>
                                             <a title="MANTENIMIENTO" class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-tools"></i></a>
                                             <a title="EDITAR" class="btn btn-link text-info px-3 mb-0" href="{{route ('equipos.edit', ['equipo' => $equipo])}}"><i class="fas fa-pencil-alt text-info" aria-hidden="true"></i></a>
                                             <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal-{{$equipo->id}}"><i class="far fa-trash-alt"></i></a>
@@ -167,18 +169,16 @@
                                 <td>{{$equipo->ord_compra ?? ''}}</td>
                                 <td>{{$equipo->fecha_adquision ?? ''}}</td>
                                 <td>
-                                    @if ($equipo->estado == 0)
-                                    <span class="badge bg-success d-flex justify-content-center align-items-center">BUENA</span>
-                                    @elseif ($equipo->estado == 1)
-                                    <span class="badge bg-success d-flex justify-content-center align-items-center">OPERATIVA</span>
+                                    @if ($equipo->estado == 1)
+                                    <span class="badge bg-success">OPERATIVA</span>
                                     @elseif ($equipo->estado == 2)
-                                    <span class="badge bg-warning d-flex justify-content-center align-items-center">REGULAR</span>
+                                    <span class="badge bg-warning">REGULAR</span>
                                     @elseif ($equipo->estado == 3)
-                                    <span class="badge bg-danger d-flex justify-content-center align-items-center">MALA</span>
+                                    <span class="badge bg-danger">INOPERATIVA</span>
                                     @elseif ($equipo->estado == 4)
-                                    <span class="badge bg-danger d-flex justify-content-center align-items-center">INOPERATIVA</span>
+                                    <span class="badge bg-info">EN MANTENIMIENTO</span>
                                     @else
-                                    <span class="badge bg-light d-flex justify-content-center align-items-center">ESTADO DESCONOCIDO</span>
+                                    <span class="badge bg-light">ESTADO DESCONOCIDO</span>
                                     @endif
                                 </td>
                                 <td>
@@ -264,16 +264,12 @@
                                                                 </span>
                                                                 <span class="mb-2 text-xs">ESTADO DE EQUIPO:
                                                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                                                        @if ($equipo->estado == 0)
-                                                                        <span class="badge bg-success">BUENA</span>
-                                                                        @elseif ($equipo->estado == 1)
+                                                                        @if ($equipo->estado == 1)
                                                                         <span class="badge bg-success">OPERATIVA</span>
                                                                         @elseif ($equipo->estado == 2)
-                                                                        <span class="badge bg-warning">REGULAR</span>
+                                                                        <span class="badge bg-success">REGULAR</span>
                                                                         @elseif ($equipo->estado == 3)
-                                                                        <span class="badge bg-danger">MALA</span>
-                                                                        @elseif ($equipo->estado == 4)
-                                                                        <span class="badge bg-danger">INOPERATIVA</span>
+                                                                        <span class="badge bg-warning">EN MANTENIMIENTO</span>
                                                                         @else
                                                                         <span class="badge bg-light">ESTADO DESCONOCIDO</span>
                                                                         @endif
@@ -343,16 +339,13 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h6 class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7" id="exampleModalLabel">{{$equipo -> nombre_equipo}} - {{$equipo -> marca}} {{$equipo -> modelo}}</h6>
-
                                 </div>
                                 <div class="modal-body">
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <form id="" action="{{route('componentes.store')}}" method="post">
                                                 @csrf
-
                                                 <input type="hidden" name="equipo_id" value="{{$equipo->id}}">
-
                                                 <div class="form-group row mb-sm-0">
                                                     <div class="col-sm-12 mb-3 mb-sm-0">
                                                         <div class="row">

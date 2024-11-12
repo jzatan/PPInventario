@@ -16,49 +16,21 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <div class="row">
-                        <div class="col justify-content-start">
-                            <div class="input-group mb-4">
-                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                <input id="buscar" type="text" class="form-control" placeholder="Search" data-search="true">
-                            </div>
-                        </div>
-
+                    <!--<div class="row">
                         <div class="col d-flex justify-content-end">
-                            Copy to Clipboard
-                            play
-                            <form>
-                                <fieldset>
-                                    <legend>Please select your preferred contact method:</legend>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            id="contactChoice1"
-                                            name="contact"
-                                            value="email"
-                                            checked />
-                                        <label for="contactChoice1">Email</label>
-
-                                        <input type="radio" id="contactChoice2" name="contact" value="phone" />
-                                        <label for="contactChoice2">Phone</label>
-
-                                        <input type="radio" id="contactChoice3" name="contact" value="mail" />
-                                        <label for="contactChoice3">Mail</label>
-                                    </div>
-                                    <div>
-                                        <button type="submit">Submit</button>
-                                    </div>
-                                </fieldset>
-                            </form>
+                            <a href=""><button class="form-control">CONTROL DE PRESTAMOS</button></a>
                         </div>
-                    </div>
+                        <div class="col d-flex justify-content-end">
+                            <a class="btn btn-white" id="exportar-pdf"><i class="fas fa-toggle-on  text-danger me-2" aria-hidden="true"></i>PDF</a>
+                        </div>
+                    </div>-->
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-2">
-                        <table id="tabla-equipos" class="table table-bordered align-items-center mb-0">
+                        <table id="tabla-equipos" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">CATEGORÍA</th>
+                                    <th></th>
                                     <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">COD. REGISTRO</th>
                                     <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">ACTIVO INFORMATICO</th>
                                     <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">MARCA</th>
@@ -72,7 +44,11 @@
                                 @foreach ($equipos as $equipo)
                                 <tr>
                                     <td>
-                                        <h6 class="text-center text-uppercase text-sm mb-0">{{$equipo -> categorias ->nombre_categoria}}</h6>
+                                        <div class="ms-auto text-center">
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="" title="Detalles del activo informatico" data-bs-toggle="modal" data-bs-target="#componentesModal-{{$equipo->id}}">
+                                                <i class="fas fa-info-circle"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                     <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> cod_registro}}</h6>
@@ -90,22 +66,20 @@
                                         <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> color ?? ''}}</h6>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if ($equipo->estado == 0)
+                                        @if ($equipo->estado_prestamo == 1)
                                         <span class="badge bg-success d-flex justify-content-center align-items-center">DISPONIBLE</span>
-                                        @elseif ($equipo->estado == 1)
-                                        <span class="badge bg-success d-flex justify-content-center align-items-center">DISPONIBLE</span>
-                                        @elseif ($equipo->estado == 4)
-                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">NO DIPONIBLE</span>
                                         @else
-                                        <span class="badge bg-light d-flex justify-content-center align-items-center">ESTADO DESCONOCIDO</span>
+                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">NO DISPONIBLE</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="ms-auto text-center">
-                                            <a class="btn btn-link text-dark px-3 mb-0" href="" title="Detalles del activo informatico" data-bs-toggle="modal" data-bs-target="#componentesModal-{{$equipo->id}}">
-                                                <i class="fas fa-eye"></i>
+                                            <a
+                                                title="Registrar prestamo"
+                                                class="btn btn-link text-dark px-3 mb-0 {{ $equipo->estado_prestamo != 1 ? 'disabled' : '' }}"
+                                                href="{{ $equipo->estado_prestamo == 1 ? route('prestamos.create', ['equipo' => $equipo->id]) : '#' }}">
+                                                <i class="fas fa-edit"></i>
                                             </a>
-                                            <a title="Registrar prestamo" class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-edit"></i></a>
                                         </div>
                                     </td>
                                 </tr>

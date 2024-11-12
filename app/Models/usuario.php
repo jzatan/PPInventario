@@ -20,7 +20,7 @@ class usuario extends Model
         return $this->hasMany(equipo::class);
     }
 
-    public function prestamos_admin(){
+    public function prestamos_prestario(){
         return $this->hasMany(prestamo::class);
     }
 

@@ -21,7 +21,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-end">
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Agregar nuevo usuario</a>
+                        <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-user-plus text-primary me-2" aria-hidden="true"></i>REGISTRAR USUARIO</a>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -29,11 +29,12 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Datos personales</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Area de trabajo</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">credenciales</th>
-                                    <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
-                                    <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Datos personales</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Area de trabajo</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">USUARIO</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">PASSWORD</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Estado</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,27 +56,23 @@
                                         <p class="text-center text-xs text-secondary mb-0">{{$usuario->areas->nombre_area}}</p>
                                     </td>
                                     <td>
-                                        <p class="text-center text-xs font-weight-bold mb-0">User: {{$usuario->usuario}}</p>
-                                        <p class="text-center text-xs text-secondary mb-0">Password: {{$usuario->contraseña}}</p>
+                                        <p class="text-center text-xs font-weight-bold mb-0">{{$usuario->usuario}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-center text-xs font-weight-bold mb-0"> {{$usuario->contraseña}}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        @if ($usuario->estado==1)
-                                        <span class="fw-bolder p-1 rounded bg-success text-white d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Activo</span>
+                                        @if ($usuario->estado == 1)
+                                        <span class="badge bg-success d-flex justify-content-center align-items-center">ACTIVO</span>
                                         @else
-                                        <span class="fw-bolder p-1 rounded bg-danger text-white d-flex justify-content-center align-items-center" style="height: 35px; width: 70px;">Inactivo</span>
+                                        <span class="badge bg-danger d-flex justify-content-center align-items-center">INACTIVO</span>
                                         @endif
                                     </td>
 
                                     <td>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <form action="{{route ('usuarios.edit', ['usuario' => $usuario])}}" method="get">
-                                                <button type="submit" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-info text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Control de pagos"><i class="fas fa-pen"></i></button>
-                                            </form>
-
-                                            <form action="" method="post">
-                                                <!--<button type="button" class="d-flex btn btn-danger " title="Control de pagos"><i class="fas fa-trash"></i></button>-->
-                                                <button type="button" class="d-flex btn btn-danger fw-bolder p-1 rounded bg-danger text-black d-flex justify-content-center align-items-center" style="height: 35px; width: 45px; margin-bottom: 0px" title="Eliminar usuario" data-bs-toggle="modal" data-bs-target="#deleteeModal-{{$usuario -> id}}"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                        <div class="ms-auto text-center">
+                                            <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" href="{{route ('usuarios.edit', ['usuario' => $usuario])}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
+                                            <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteeModal-{{$usuario -> id}}"><i class="far fa-trash-alt"></i></a>
                                         </div>
                                     </td>
                                     <!--- Warning delete -->
@@ -92,11 +89,11 @@
                                                     ¿Seguro que deseas eliminar al usuario?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="text-white btn bg-secondary" data-bs-dismiss="modal">Close</button>
                                                     <form action="{{route('usuarios.destroy',['usuario'=>$usuario->id])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="btn bg-gradient-danger">Delete</button>
+                                                        <button type="submit" class="text-white btn bg-danger">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('fecha_adquision');
             $table->string('observacion', 250)->nullable();
             $table->tinyInteger('estado')->default(1);
+            $table->tinyInteger('estado_prestamo')->default(1);
             $table->timestamps();
         });
     }

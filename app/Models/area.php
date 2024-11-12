@@ -15,4 +15,8 @@ class area extends Model
     public function usuarios(){
         return $this->belongsTo(usuario::class);
     }
+
+    public function prestamos_prestador_area(){
+        return $this->hasMany(prestamo::class);
+    }
 }

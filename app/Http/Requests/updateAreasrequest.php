@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class storePrestamosrequest extends FormRequest
+class updateAreasrequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,19 +21,15 @@ class storePrestamosrequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
+        $area = $this->route('area');
+        $areaid = $area->id;
         return [
             //
-            'equipo_id' => 'required',
-            'id_prestador_area' => 'required',
-            'id_prestario' => 'required',
-            'cod_prestamo' => 'required|max:10',
-            'fecha_prestamo' => 'required|date',
-            'fecha_devolucion' => 'required|date',
-            'observaciones' => 'nullable|max:250',
+            'nombre_area' => 'required|max:50,'.$areaid,
+            'ubicacion' => 'required|max:250',
             'estado' => 'required'
-
         ];
     }
 }

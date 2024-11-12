@@ -85,11 +85,10 @@
                                 <select name="estado" id="estado" class="form-control text-center text-bold">
                                     @php
                                     $estados =  [
-                                        "0" => "BUENA",
                                         "1" => "OPERATIVA",
                                         "2" => "REGULAR",
-                                        "3" => "MALA",
-                                        "4" => "INOPERATIVA"
+                                        "3" => "INOPERATIVA",
+                                        "4" => "EN MANTENIMIENTO"
                                                 ];
                                     @endphp
                                     @foreach ($estados as $value => $label)

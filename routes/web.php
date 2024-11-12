@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\areaController;
 use App\Http\Controllers\componenteController;
 use App\Http\Controllers\equipoController;
 use App\Http\Controllers\prestamoController;
@@ -21,6 +22,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+// Ruta para visualizar activos informaticos disponibles
+Route::get('/activos/disponibles',[equipoController::class, 'activosdisponibles']) -> name('activosdisponibles');
 
 // Ruta para verficicar en tiempo real el nombre de usuario registrado mediante AJAX
 Route::get('/verificar-usuario', [usuarioController::class, 'verificarusuario']);
@@ -42,3 +45,13 @@ Route::resource('equipos', equipoController::class);
 Route::resource('componentes', componenteController::class);
 // crear rutas para prestamos
 Route::resource('prestamos', prestamoController::class);
+// crear rutas para areas
+Route::resource('areas',areaController::class);
+
+/*Escucha solicitudes GET en la URL /prestamos/create/{equipo}.
+Utiliza el Route Model Binding para pasar automáticamente un objeto equipo al controlador.*/
+Route::get('/prestamos/create/{equipo}', [prestamoController::class, 'create'])->name('prestamos.create');
+
+
+//??
+Route::post('/prestamos/devolucion', [PrestamoController::class, 'devolucion'])->name('prestamos.devolucion');
