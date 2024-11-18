@@ -7,6 +7,7 @@ use App\Http\Requests\updateEquiposrequest;
 use App\Models\categoria;
 use App\Models\componente;
 use App\Models\equipo;
+use App\Models\prestamo;
 use App\Models\usuario;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,9 +24,10 @@ class equipoController extends Controller
     {
         //
         //$componentes = componente::get();
+        $prestamos = prestamo::get();
         $equipos = equipo::get();
         $componentes = Componente::with('equipos')->get(); // Asegúrate de que el modelo Componente tenga la relación definida
-        return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos'));
+        return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos','prestamos'));
     }
 
 

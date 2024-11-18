@@ -3,6 +3,8 @@
 use App\Http\Controllers\areaController;
 use App\Http\Controllers\componenteController;
 use App\Http\Controllers\equipoController;
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\loginController;
 use App\Http\Controllers\prestamoController;
 use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/login',[loginController::class,'index']) -> name('login');
+Route::post('/login',[loginController::class,'login']);
+
+Route::get('/',[homeController::class,'index']) -> name('panel');
+
 
 // Ruta para visualizar activos informaticos disponibles
 Route::get('/activos/disponibles',[equipoController::class, 'activosdisponibles']) -> name('activosdisponibles');
@@ -53,5 +57,5 @@ Utiliza el Route Model Binding para pasar automáticamente un objeto equipo al c
 Route::get('/prestamos/create/{equipo}', [prestamoController::class, 'create'])->name('prestamos.create');
 
 
-//??
+// Ruta que envia en este caso el cambio de estados en dos tablas diferentes
 Route::post('/prestamos/devolucion', [PrestamoController::class, 'devolucion'])->name('prestamos.devolucion');

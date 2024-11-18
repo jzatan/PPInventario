@@ -24,10 +24,6 @@ class usuario extends Model
         return $this->hasMany(prestamo::class);
     }
 
-    public function prestamos_prestamista(){
-        return $this->hasMany(prestamo::class);
-    }
-
     public function mantenimiento_usuario(){
         return $this->hasMany(mantenimiento::class);
     }
@@ -39,4 +35,5 @@ class usuario extends Model
     public function areas(){
         return $this->belongsTo(area::class,'area_id');
     }
+
 }

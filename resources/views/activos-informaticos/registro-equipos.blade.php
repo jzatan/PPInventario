@@ -83,11 +83,10 @@
                                 <label for="estado">ESTADO</label>
                                 <select name="estado" id="estado" class="form-control text-center text-bold">
                                     <option value="" class="ms-auto text-center text-xs text-secondary mb-0">― SELECCIONAR ―</option>
-                                    <option value="0" class="text-center">BUENA</option>
-                                    <option value="1" class="text-center">OPERATIVA</option>
+                                    <option value="1" class="text-center">OEPRATIVA</option>
                                     <option value="2" class="text-center">REGULAR</option>
-                                    <option value="3" class="text-center">MALA</option>
-                                    <option value="4" class="text-center">INOPERATIVA</option>
+                                    <option value="3" class="text-center">INOPERATIVA</option>
+                                    <option hidden value="4" class="text-center">EN MANTENIMIENTO</option>
                                 </select>
                             </div>
                         </div>

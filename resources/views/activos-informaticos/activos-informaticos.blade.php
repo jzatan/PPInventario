@@ -64,7 +64,13 @@
                                                 <i class="fas fa-info-circle text-dark"></i>
                                             </a>
                                         </div>
+                                        <div class="ms-auto text-center">
+                                            <a class="btn btn-link text-dark px-3 mb-0" href="" title="HISTORIAL DE PRESTAMOS" data-bs-toggle="modal" data-bs-target="#historialModal-{{$equipo->id}}">
+                                                <i class="fas fa-history text-dark"></i>
+                                            </a>
+                                        </div>
                                     </td>
+
                                     <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> cod_registro}}</h6>
                                     </td>
@@ -437,6 +443,69 @@
                         </div>
                     </div>
                     <!-- fin UpdateComponentes modal -->
+                    @endforeach
+
+                    @foreach ($equipos as $equipo)
+                    <div class="modal fade" id="historialModal-{{$equipo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="d-flex flex-column">
+                                                                <h6 class="mb-3 text-sm">
+                                                                    {{$equipo->nombre_equipo ?? 'ERROR'}}
+                                                                    {{$equipo->marca ?? ''}}
+                                                                    {{$equipo->modelo ?? ''}}
+                                                                </h6>
+                                                                <span class="mb-2 text-xs">HISTORIAL DE PRESTAMOS:
+                                                                    <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
+                                                                        @php
+                                                                        $historial_prestamos = $prestamos->where('equipo_id', $equipo->id);
+                                                                        @endphp
+
+                                                                        @if ($historial_prestamos->isEmpty())
+                                                                        "SIN PRESTAMOS REGISTRADOS"
+                                                                        <hr>
+                                                                        @else
+                                                                        <table class="table">
+                                                                            <tbody>
+                                                                                @foreach ($historial_prestamos as $prestamo)
+                                                                                <tr>
+                                                                                    <td class="text-start">
+                                                                                        COD. PRESTAMO :{{$prestamo->cod_prestamo}} <br>
+                                                                                        DATE_PRESTAMO: {{$prestamo -> fecha_prestamo}} <br>
+                                                                                        DATE_DEVOLUCION: {{$prestamo ->fecha_devolucion}} <br>
+                                                                                        ESTADO_PRESTAMO: 
+                                                                                        @if ($prestamo->estado == 0)
+                                                                                        <span class="badge bg-success">PRESTADO</span>
+                                                                                        @else
+                                                                                        <span class="badge bg-warning">DEVUELTO</span>
+                                                                                        @endif
+                                                                                        <br>******************************************************
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                        @endif
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
             </div>

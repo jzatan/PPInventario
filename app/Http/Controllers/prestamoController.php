@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storePrestamosrequest;
+use App\Http\Requests\updatePrestamosrequest;
 use App\Models\area;
 use App\Models\componente;
 use App\Models\equipo;
@@ -100,9 +101,15 @@ class prestamoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(prestamo $prestamo)
     {
-        //
+        // LLamo a los usuarios que esten en  estado 1 = activos
+        $usuarios = usuario::where('estado', 1)->get();
+
+        // LLamo a las areas que estan en estado 1 = activos
+        $areas = area::where('estado', 1)->get();
+
+        return view ('prestamos.update-prestamo',['prestamo' => $prestamo], compact('areas','usuarios'));
     }
 
     /**
@@ -112,9 +119,19 @@ class prestamoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(updatePrestamosrequest $request, prestamo $prestamo)
     {
         //
+         //dd($request);
+         try {
+            DB::beginTransaction();
+            $prestamo->update($request->validated());
+            DB::commit();
+            return redirect()->route('prestamos.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('prestamos.index');
+        }
     }
 
     /**
@@ -126,6 +143,13 @@ class prestamoController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $prestamo = prestamo::findOrFail($id);
+            $prestamo->delete();
+            return redirect()->route('prestamos.index');
+        } catch (Exception $e) {
+            return redirect()->route('prestamos.index');
+        }
     }
 
     public function devolucion(Request $request)

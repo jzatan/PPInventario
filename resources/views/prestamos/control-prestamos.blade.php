@@ -54,7 +54,7 @@
                                 </span>
                                 <span class="mb-2 text-xs">FECHA DEVOLUCION:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                        {{$prestamo -> fecha_prestamo ?? ''}}
+                                        {{$prestamo -> fecha_devolucion ?? ''}}
                                     </span>
                                 </span>
                                 <span class="mb-2 text-xs">ESTADO:
@@ -68,19 +68,79 @@
                                 </span>
                                 <span class="mb-2 text-xs">OBSERVACIONES:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                        {{$prestamo -> observaciones ?? ''}}
+                                        {{$prestamo -> observaciones ?? 'SIN OBSERVACIONES'}}
                                     </span>
                                 </span>
+                                @php
+                                $fechaActual = \Carbon\Carbon::now();
+                                $fechaDevolucion = \Carbon\Carbon::parse($prestamo->fecha_devolucion);
+                                $diasRestantes = $fechaActual->diffInDays($fechaDevolucion, false);
+                                $detallePrestamo = '';
+
+                                if ($prestamo->estado == 0) { // Si aún está prestado
+                                if ($diasRestantes > 0) {
+                                $detallePrestamo = '0';
+                                } elseif ($diasRestantes == 0) {
+                                $detallePrestamo = '1';
+                                } else {
+                                $detallePrestamo = '2';
+                                }
+                                } else {
+                                $detallePrestamo = 'ACTIVO INFORMÁTICO DEVUELTO';
+                                }
+                                @endphp
+
+                                <span class="mb-2 text-xs">DETALLES DE PRESTAMO:
+                                    <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
+                                        @if ($detallePrestamo == 0)
+                                        <span class="badge  w-58 bg-info">ACTIVO INFORMÁTICO EN PLAZO VIGENTE</span>
+                                        @elseif ($detallePrestamo == 1)
+                                        <span class="badge bg-warning">HOY ES EL ÚLTIMO DÍA DE PRÉSTAMO</span>
+                                        @elseif ($detallePrestamo == 2)
+                                        <span class="badge w-50 bg-danger">PLAZO DE PRÉSTAMO TERMINADO</span>
+                                        @endif
+                                    </span>
+                                </span>
+
                             </div>
                             <div class="ms-auto text-end">
                                 <a class="btn btn-link text-info text-gradient px-3 mb-0 btn-devolucion" data-id="{{$prestamo -> id}}" data-equipo-id="{{$prestamo -> equipos -> id}}" href="javascript:;"><i class="fas fa-sliders-h me-2"></i>Devolucion</a>
-                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                                <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteprestamo-{{$prestamo -> id}}"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                <a class="btn btn-link text-dark px-3 mb-0" href="{{route ('prestamos.edit', ['prestamo' => $prestamo])}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                             </div>
                         </li>
                     </ul>
                     @endforeach
                 </div>
+
+
+                <!--- Modal eliminar prestamo --->
+                @foreach ($prestamos as $prestamo)
+                <div class="modal fade" id="deleteprestamo-{{$prestamo -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Advertencia</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Seguro que deseas eliminar al prestamo?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="text-white btn bg-secondary" data-bs-dismiss="modal">Close</button>
+                                <form action="{{route('prestamos.destroy',['prestamo'=>$prestamo->id])}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="text-white btn bg-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @endforeach
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ class updatePrestamosrequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,20 @@ class updatePrestamosrequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules():array
     {
+        $prestamo = $this->route('prestamo');
+        $prestamoid = $prestamo->id;
         return [
             //
+            'equipo_id' => 'required',
+            'id_prestador_area' => 'required',
+            'id_prestario' => 'required',
+            'cod_prestamo' => 'required|max:10,'.$prestamoid,
+            'fecha_prestamo' => 'required|date',
+            'fecha_devolucion' => 'required|date',
+            'observaciones' => 'nullable|max:250',
+            'estado' => 'required'
         ];
     }
 }
