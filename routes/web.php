@@ -5,7 +5,11 @@ use App\Http\Controllers\componenteController;
 use App\Http\Controllers\equipoController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\logoutController;
+use App\Http\Controllers\mantenimientoController;
 use App\Http\Controllers\prestamoController;
+use App\Http\Controllers\roleController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\usuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/logout',[logoutController::class,'logout'])->name('logout');
 
 Route::get('/login',[loginController::class,'index']) -> name('login');
 Route::post('/login',[loginController::class,'login']);
@@ -51,11 +56,23 @@ Route::resource('componentes', componenteController::class);
 Route::resource('prestamos', prestamoController::class);
 // crear rutas para areas
 Route::resource('areas',areaController::class);
+// crear rutas para mantenimientos
+Route::resource('mantenimientos',mantenimientoController::class);
+// crear rutas para users
+Route::resource('users',userController::class);
+// crear rutas para roles
+Route::resource('roles',roleController::class);
+
+
 
 /*Escucha solicitudes GET en la URL /prestamos/create/{equipo}.
 Utiliza el Route Model Binding para pasar automáticamente un objeto equipo al controlador.*/
 Route::get('/prestamos/create/{equipo}', [prestamoController::class, 'create'])->name('prestamos.create');
 
+Route::get('/mantenimientos/create/{equipo}',[mantenimientoController::class,'create'])->name('mantenimientos.create');
+
 
 // Ruta que envia en este caso el cambio de estados en dos tablas diferentes
 Route::post('/prestamos/devolucion', [PrestamoController::class, 'devolucion'])->name('prestamos.devolucion');
+
+

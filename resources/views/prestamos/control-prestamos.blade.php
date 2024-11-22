@@ -37,24 +37,24 @@
                                         {{$prestamo -> equipos -> nombre_equipo ?? ''}} {{$prestamo -> equipos -> marca ?? ''}} {{$prestamo -> equipos -> modelo ?? ''}}
                                     </span>
                                 </span>
-                                <span class="mb-2 text-xs">PRESTARIO:
+                                <span class="mb-2 text-xs">PRESTAMISTA:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                        {{$prestamo -> usuario_prestario -> nombres ?? ''}} {{$prestamo -> usuario_prestario -> apellidos ?? ''}} - {{$prestamo -> usuario_prestario  -> areas -> nombre_area ?? ''}}
+                                        {{$prestamo -> equipos -> areas -> nombre_area ?? ''}} 
                                     </span>
                                 </span>
-                                <span class="mb-2 text-xs">PRESTADOR:
+                                <span class="mb-2 text-xs">PRESTATARIO:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
                                         {{$prestamo -> usuario_prestador_area -> nombre_area ?? ''}}
                                     </span>
                                 </span>
                                 <span class="mb-2 text-xs">FECHA PRESTAMO:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                        {{$prestamo -> fecha_prestamo ?? ''}}
+                                    {{\Carbon\Carbon::parse($prestamo -> fecha_prestamo)->format('d-m-Y')}}
                                     </span>
                                 </span>
                                 <span class="mb-2 text-xs">FECHA DEVOLUCION:
                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                        {{$prestamo -> fecha_devolucion ?? ''}}
+                                        {{\Carbon\Carbon::parse($prestamo -> fecha_devolucion)->format('d-m-Y')}}
                                     </span>
                                 </span>
                                 <span class="mb-2 text-xs">ESTADO:

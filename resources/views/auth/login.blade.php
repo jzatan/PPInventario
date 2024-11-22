@@ -16,7 +16,7 @@
 
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/c1abe62204.js" crossorigin="anonymous"></script>
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
@@ -55,7 +55,7 @@
                   <form role="form" action="/login" method="post">
                     @csrf
                     <div class="mb-3">
-                      <input type="text" name="email" class="form-control form-control-lg" placeholder="Correo" aria-label="email">
+                      <input type="email" name="email" class="form-control form-control-lg" placeholder="Correo" aria-label="email">
                     </div>
                     <div class="mb-3 position-relative">
                       <input type="text" id="contraseña" name="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="contraseña" autocomplete="off">
@@ -76,6 +76,16 @@
                       </button>
                     </div>
                   </form>
+                  @if ($errors->any())
+                  @foreach ($errors->all() as $item)
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{$item}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  @endforeach
+                  @endif
+
+
 
                   <script>
                     const togglePasswordButton = document.getElementById('togglePassword');

@@ -26,6 +26,7 @@ class storeEquiposrequest extends FormRequest
         return [
             //
             'categoria_id' => 'required',
+            'area_id' => 'required',
             'usuario_id' => 'required',
             'nombre_equipo' => 'required|max:255',
             'marca' => 'required|max:30',

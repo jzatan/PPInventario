@@ -17,20 +17,9 @@ class AreasSeeder extends Seeder
     {
         area::insert([
             [
-                'nombre_area' => 'LOGISTICA',
-                'ubicacion' => 'DSRMH - 1ER PISO - JR CUZCO 208'
+                'nombre_area' => 'ADMINISTRACION',
+                'ubicacion' => '-'
             ],
-
-            [
-                'nombre_area' => 'MANTENIMIENTO',
-                'ubicacion' => 'DSRMH - 2DO PISO - JR CUZCO 208'
-            ],
-
-            [
-                'nombre_area' => 'INFORMATICA',
-                'ubicacion' => 'DSRMH - 3ER PISO - JR CUZCO 208'
-            ],
-
         ]);
     }
 }

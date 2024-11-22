@@ -21,12 +21,12 @@ class loginRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules():array
     {
         return [
             //
-            'email' => 'required|max:30',
-            'password' => 'required|max:8'
+            'email' => 'required|email',
+            'password' => 'required'
 
         ];
     }

@@ -24,7 +24,7 @@ class prestamoController extends Controller
     {
         //
 
-        $prestamos = prestamo::where('estado',0)->get();
+        $prestamos = prestamo::where('estado', 0)->get();
         //$prestamos = prestamo::get();
         $equipos = equipo::whereIn('estado', [3])->get(); //??
         $componentes = componente::with('equipos')->get();
@@ -109,7 +109,7 @@ class prestamoController extends Controller
         // LLamo a las areas que estan en estado 1 = activos
         $areas = area::where('estado', 1)->get();
 
-        return view ('prestamos.update-prestamo',['prestamo' => $prestamo], compact('areas','usuarios'));
+        return view('prestamos.update-prestamo', ['prestamo' => $prestamo], compact('areas', 'usuarios'));
     }
 
     /**
@@ -122,8 +122,8 @@ class prestamoController extends Controller
     public function update(updatePrestamosrequest $request, prestamo $prestamo)
     {
         //
-         //dd($request);
-         try {
+        //dd($request);
+        try {
             DB::beginTransaction();
             $prestamo->update($request->validated());
             DB::commit();

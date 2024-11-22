@@ -118,26 +118,6 @@ function validateNROSERIE() {
         }
     }); */
 
-document.getElementById("formEquipos-update").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Prevenir el envío inmediato
-    
-        // Llamadas a las funciones de validación
-        const validEquipos = validateNOMEQUIPOS();
-        const validMarca = validateMarca();
-        const validModelo = validateModelo();
-        const validNSerie = validateNROSERIE();
-        
-    
-        // Enviar el formulario solo si todas las validaciones son verdaderas
-        if (            
-            validEquipos &&
-            validMarca &&
-            validModelo &&
-            validNSerie 
-            ) {
-            this.submit(); // Envía el formulario
-        }
-    });
 
 
 

@@ -19,7 +19,6 @@
                     <form id="form-prestamos" action="{{route('prestamos.store')}}" method="post">
                         @csrf
 
-
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-8 mb-3 mb-sm-3">
                                 <label for="nombre_equipo"> NOMBRE DE EQUIPO</label>
@@ -31,20 +30,18 @@
                                 <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" required >
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
-                                <label for="id_prestador_area">PRESTADOR</label>
+                                <label for="id_prestario">PRESTAMISTA</label>
+                                <!-- Llamamos a las areas en estado 1 = activos-->
+                                <select class="form-control" id="id_prestario" name="id_prestario">
+                                    <option value="">{{$equipo -> areas -> nombre_area}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
+                                <label for="id_prestador_area">PRESTATARIO</label>
                                 <!-- Llamamos a las areas en estado 1 = activos-->
                                 <select class="form-control" id="id_prestador_area" name="id_prestador_area">
                                     @foreach ($areas as $item)
                                     <option value="{{$item->id}}">{{$item->nombre_area ?? ''}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
-                                <label for="id_prestario">PRESTARIO</label>
-                                <!-- Llamamos a las areas en estado 1 = activos-->
-                                <select class="form-control" id="id_prestario" name="id_prestario">
-                                    @foreach ($usuarios as $item)
-                                    <option value="{{$item->id}}">{{$item->nombres}} {{$item->apellidos}}</option>
                                     @endforeach
                                 </select>
                             </div>

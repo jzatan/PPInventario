@@ -1,14 +1,15 @@
 <!--LLamas a las normativas de la plantilla template-->
 @extends('template')
 
-@section('title','Usuarios')
+@section('title','Empleados')
 
 @push('css')
-
+<!-- Script que nos permitira descargar en excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 @endpush
 
-@section('header-nav', 'Usuarios')
-@section('header', 'Usuarios')
+@section('header-nav', 'Empleados')
+@section('header', 'Empleados')
 
 @section('content')
 <!--Contenido-->
@@ -20,20 +21,30 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <div class="d-flex justify-content-end">
-                        <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-user-plus text-primary me-2" aria-hidden="true"></i>REGISTRAR USUARIO</a>
+                    <div class="row">
+                        <div class="col justify-content-start">
+                            <div class="input-group mb-4">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input id="buscar" type="text" class="form-control" placeholder="Search" data-search="true">
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <a class="btn btn-white" id="exportar-excel"><i class="fa fa-solid fa-file-excel text-success me-2" aria-hidden="true"></i>EXCEL</a>
+                            <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-user-plus text-primary me-2" aria-hidden="true"></i>REGISTRAR EMPLEADO</a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <table class="table table-responsive align-items-center mb-0" id="tabla-empleados">
                             <thead>
                                 <tr>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Datos personales</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Area de trabajo</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">USUARIO</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">PASSWORD</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Estado</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">DATOS PERSONALES</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">AREA</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">DNI</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">TELEFONO</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">CORREO</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ESTADO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Acciones</th>
                                 </tr>
                             </thead>
@@ -41,25 +52,20 @@
                                 @foreach ($usuarios as $usuario)
                                 <tr>
                                     <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div>
-                                                <img src="../assets/img/usuario.png" class="avatar avatar-sm me-3" alt="user1">
-                                            </div>
-                                            <div class=" d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{$usuario->nombres ?? ''}} {{$usuario->apellidos}}</h6>
-                                                <p class="text-xs text-secondary mb-0">Documento de identidad: {{$usuario->dni}}</p>
-                                                <p class="text-xs text-secondary mb-0">Celular: {{$usuario->telefono}}</p>
-                                            </div>
-                                        </div>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$usuario->nombres ?? ''}} <br> {{$usuario->apellidos ?? ''}}</h6>
+
                                     </td>
                                     <td>
-                                        <p class="text-center text-xs text-secondary mb-0">{{$usuario->areas->nombre_area}}</p>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$usuario->areas->nombre_area}} </h6>
                                     </td>
                                     <td>
-                                        <p class="text-center text-xs font-weight-bold mb-0">{{$usuario->usuario}}</p>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$usuario->dni}} </h6>
                                     </td>
                                     <td>
-                                        <p class="text-center text-xs font-weight-bold mb-0"> {{$usuario->contraseña}}</p>
+                                        <h6 class="ms-auto text-center text-sm mb-0"> {{$usuario->telefono}}</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$usuario->correo}} </h6>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if ($usuario->estado == 1)
@@ -86,7 +92,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    ¿Seguro que deseas eliminar al usuario?
+                                                    ¿Seguro que deseas eliminar al empleado?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="text-white btn bg-secondary" data-bs-dismiss="modal">Close</button>
@@ -108,10 +114,10 @@
                                             <div class="modal-content">
                                                 <div class="modal-body p-0">
                                                     <div class="card-header pb-0 text-left">
-                                                        <h3 class="font-weight-bolder text-info text-gradient">Registrar usuario</h3>
+                                                        <h3 class="font-weight-bolder text-info text-gradient">Registrar empleado</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <form id="userForm" action="{{route('usuarios.store')}}" method="post">
+                                                        <form id="" action="{{route('usuarios.store')}}" method="post">
                                                             @csrf
                                                             <div class="form-group">
                                                                 <label for="area_id">ÁREA DE TRABAJO</label>
@@ -122,33 +128,24 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-
+                                                            <div class="form-group">
+                                                                <label for="nombres"> NOMBRES DEL EMPLEADO</label>
+                                                                <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="Ingrese nombres" oninput="validateNombres(this)" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="apellidos"> APELLIDOS DEL EMPLEADO</label>
+                                                                <input type="text" class="form-control" id="apellidos" name="apellidos" title="Formato Fecha" placeholder="Ingrese apellidos" oninput="validateApellidos()" required>
+                                                            </div>
                                                             <div class="form-group row">
-                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="usuario">USUARIO</label>
-                                                                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="example@user" required maxlength="30" oninput="validateUsuario()" required>
-                                                                    <div id="usuarioMessage" class="invalid-feedback"></div>
+                                                                <div class="form-group col-sm-12 mb-3 mb-sm-0">
+                                                                    <label for="correo">CORREO ELECTRONICO</label>
+                                                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="example@gmail.com" required oninput="">
                                                                 </div>
-                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                    <label for="contraseña">CONTRASEÑA</label>
-                                                                    <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Crear contraseña" required minlength="8" maxlength="8" oninput="validatePassword()" required>
-                                                                    <div id="contraseña-error" class="invalid-feedback">
-                                                                        La contraseña debe tener exactamente 8 caracteres.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="nombres"> NOMBRES DEL USUARIO</label>
-                                                                <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="Ingrese nombres de usuario" oninput="validateNombres(this)" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="apellidos"> APELLIDOS DEL USUARIO</label>
-                                                                <input type="text" class="form-control" id="apellidos" name="apellidos" title="Formato Fecha" placeholder="Ingrese apellidos de usuario" oninput="validateApellidos()" required>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
                                                                     <label for="dni">DOCUMENTO DE IDENTIDAD (DNI)</label>
-                                                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese DNI" required maxlength="8" pattern="\d{8}" oninput="validateDNI()">
+                                                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="#######" required maxlength="8" pattern="\d{8}" oninput="validateDNI()">
                                                                     <div id="dni-error" class="invalid-feedback">
                                                                         El DNI debe tener 8 dígitos numéricos.
                                                                     </div>
@@ -185,6 +182,22 @@
 @endsection
 
 @push('js')
+<script>
+    var busqueda = document.getElementById('buscar');
+    var table = document.getElementById("tabla-empleados").tBodies[0];
+
+    buscaTabla = function() {
+        texto = busqueda.value.toLowerCase();
+        var r = 0;
+        while (row = table.rows[r++]) {
+            if (row.innerText.toLowerCase().indexOf(texto) !== -1)
+                row.style.display = null;
+            else
+                row.style.display = 'none';
+        }
+    }
+    busqueda.addEventListener('keyup', buscaTabla);
+</script>
 <script src="{{asset ('assets/js/imputs-validations.js')}}"></script>
 
 @endpush

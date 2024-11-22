@@ -31,8 +31,8 @@ class storeUsuariosrequest extends FormRequest
             'apellidos' => 'required|max:80',
             'dni' => 'required|max:8',
             'telefono' => 'required|max:15',
-            'usuario' => 'required|max:30',
-            'contraseña' => 'required|max:8'
+            'correo' => 'required|max:40'
+
         
         ];
     }

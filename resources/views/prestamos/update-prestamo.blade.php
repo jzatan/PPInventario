@@ -30,20 +30,18 @@
                                 <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" value="{{$prestamo -> cod_prestamo ?? ''}}" required>
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
-                                <label for="id_prestador_area">PRESTADOR</label>
+                                <label for="id_prestario">PRESTAMISTA</label>
+                                <!-- Llamamos a las areas en estado 1 = activos-->
+                                <select class="form-control" id="id_prestario" name="id_prestario">
+                                    <option value="">{{$prestamo -> equipos -> areas -> nombre_area ?? ''}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
+                                <label for="id_prestador_area">PRESTATARIO</label>
                                 <!-- Llamamos a las areas en estado 1 = activos-->
                                 <select class="form-control" id="id_prestador_area" name="id_prestador_area">
                                     @foreach ($areas as $item)
                                     <option value="{{$item->id}}" {{ $prestamo->id_prestador_area == $item->id ? 'selected' : '' }}>{{$item->nombre_area}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
-                                <label for="id_prestario">PRESTARIO</label>
-                                <!-- Llamamos a las areas en estado 1 = activos-->
-                                <select class="form-control" id="id_prestario" name="id_prestario">
-                                    @foreach ($usuarios as $item)
-                                    <option value="{{$item->id}}" {{ $prestamo->id_prestario == $item->id ? 'selected' : '' }}>{{$item->nombres ?? ''}} {{$item -> apellidos ?? ''}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -71,13 +69,17 @@
 
 
                         <div class="form-group row mb-sm-0">
-                            <div class="form-group col-sm-4 mb-3 mb-sm-3">
+                            <div class="form-group col-sm-2 mb-3 mb-sm-3">
                                 <hr>
-                                <a class="btn btn-primary w-100" href="{{route ('activosdisponibles')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i>REGRESAR</a>
+                                <a class="btn btn-primary w-100" href="{{route ('prestamos.index')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i></a>
                             </div>
-                            <div class="form-group col-sm-8 mb-3 mb-sm-3">
+                            <div class="form-group col-sm-5 mb-3 mb-sm-3">
                                 <hr>
-                                <button type="submit" class="btn w-100"><span class="btn-inner--icon"><i class="fa fa-save text-secondary me-2"></i></span>REGISTRAR PRESTAMO</button>
+                                <button type="reset" class="btn btn-secondary w-100"><span class="btn-inner--icon"></span>CANCELAR</button>
+                            </div>
+                            <div class="form-group col-sm-5 mb-3 mb-sm-3">
+                                <hr>
+                                <button type="submit" class="btn w-100"><span class="btn-inner--icon"></span>ACTUALIZAR</button>
                             </div>
                         </div>
                     </form>

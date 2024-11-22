@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('apellidos', 80);
             $table->string('dni', 8);
             $table->string('telefono', 15);
-            $table->string('usuario', 30);
-            $table->string('contraseña', 8);
+            $table->string('correo', 40);
             $table->tinyInteger('estado')->default(1);
             $table->foreignId('area_id')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -48,6 +48,7 @@
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ORD. COMPRA</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ACTIVO INFORMATICO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">COLOR</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">DESTINO</th>
                                     <th hidden class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">FECHA ADQUISICIÓN</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">TIEMPO ADQUISICIÓN</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">estado</th>
@@ -83,6 +84,9 @@
                                     <td>
                                         <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> color ?? ''}}</h6>
                                     </td>
+                                    <td>
+                                        <h6 class="ms-auto text-center text-sm mb-0">{{$equipo -> areas ->nombre_area ?? ''}}</h6>
+                                    </td>
                                     <td hidden>
                                         <h6 class="fecha_adquision text-center text-sm mb-0">{{ \Carbon\Carbon::parse($equipo->fecha_adquision)->format('Y-m-d') }}</h6>
                                     </td>
@@ -93,11 +97,11 @@
                                         @if ($equipo->estado == 1)
                                         <span class="badge bg-success">OPERATIVA</span>
                                         @elseif ($equipo->estado == 2)
-                                        <span class="badge bg-warning">REGULAR</span>
+                                        <span class="badge bg-info">REGULAR</span>
                                         @elseif ($equipo->estado == 3)
                                         <span class="badge bg-danger">INOPERATIVA</span>
                                         @elseif ($equipo->estado == 4)
-                                        <span class="badge bg-info">EN MANTENIMIENTO</span>
+                                        <span class="badge bg-warning">EN MANTENIMIENTO</span>
                                         @else
                                         <span class="badge bg-light">ESTADO DESCONOCIDO</span>
                                         @endif
@@ -107,7 +111,6 @@
                                     </td>
                                     <td>
                                         <div class="ms-auto text-center">
-                                            <a title="MANTENIMIENTO" class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-tools"></i></a>
                                             <a title="EDITAR" class="btn btn-link text-info px-3 mb-0" href="{{route ('equipos.edit', ['equipo' => $equipo])}}"><i class="fas fa-pencil-alt text-info" aria-hidden="true"></i></a>
                                             <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal-{{$equipo->id}}"><i class="far fa-trash-alt"></i></a>
                                         </div>
@@ -149,13 +152,14 @@
                     <table hidden id="tabla-equipos-oculta">
                         <thead>
                             <tr>
-                                <th>COD. DE REGISTRO</th>
+                                <th>COD. REGISTRO</th>
                                 <th>ACTIVO INFORMATICO</th>
                                 <th>MARCA</th>
                                 <th>MODELO</th>
                                 <th>COLOR</th>
-                                <th>NRO. DE SERIE</th>
-                                <th>ORD. DE COMPRA</th>
+                                <th>NRO. SERIE</th>
+                                <th>ORD. COMPRA</th>
+                                <th>DESTINO</th>
                                 <th>FECHA DE ADQUISICIÓN</th>
                                 <th>ESTADO</th>
                                 <th>COMPONENTES</th>
@@ -173,6 +177,7 @@
                                 <td>{{$equipo->color ?? ''}}</td>
                                 <td>{{$equipo->nro_serie ?? ''}}</td>
                                 <td>{{$equipo->ord_compra ?? ''}}</td>
+                                <td>{{$equipo->areas->nombre_area ?? ''}}</td>
                                 <td>{{$equipo->fecha_adquision ?? ''}}</td>
                                 <td>
                                     @if ($equipo->estado == 1)
@@ -200,7 +205,7 @@
                                     @endforeach
                                     @endif
                                 </td>
-                                <td>{{$equipo -> observacion}}</td>
+                                <td>{{$equipo -> observacion ?? 'SIN OBSERVACIONES'}}</td>
                                 <td></td>
                             </tr>
                             @endforeach
@@ -227,12 +232,17 @@
                                                                     {{$equipo->marca ?? ''}}
                                                                     {{$equipo->modelo ?? ''}}
                                                                 </h6>
+                                                                <span class="mb-2 text-xs">DESTINO:
+                                                                    <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
+                                                                        {{$equipo->areas->nombre_area}}
+                                                                    </span>
+                                                                </span>
                                                                 <span class="mb-2 text-xs">CATEGORIA:
                                                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
                                                                         {{$equipo->categorias->nombre_categoria}}
                                                                     </span>
                                                                 </span>
-                                                                <span class="mb-2 text-xs">REGISTRO:
+                                                                <span class="mb-2 text-xs">REGISTRADO POR:
                                                                     <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
                                                                         {{$equipo->usuarios->nombres ?? 'ERROR'}}
                                                                         {{$equipo->usuarios->apellidos ?? ''}}
@@ -480,7 +490,7 @@
                                                                                         COD. PRESTAMO :{{$prestamo->cod_prestamo}} <br>
                                                                                         DATE_PRESTAMO: {{$prestamo -> fecha_prestamo}} <br>
                                                                                         DATE_DEVOLUCION: {{$prestamo ->fecha_devolucion}} <br>
-                                                                                        ESTADO_PRESTAMO: 
+                                                                                        ESTADO_PRESTAMO:
                                                                                         @if ($prestamo->estado == 0)
                                                                                         <span class="badge bg-success">PRESTADO</span>
                                                                                         @else

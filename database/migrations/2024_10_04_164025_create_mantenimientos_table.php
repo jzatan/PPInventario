@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreignId('mantenimiento_detalle_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('id_usuario_mantenimiento');
             $table->foreign('id_usuario_mantenimiento')->references('id')->on('usuarios');
-            $table->unsignedBigInteger('id_usuario_admin');
-            $table->foreign('id_usuario_admin')->references('id')->on('usuarios');
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });

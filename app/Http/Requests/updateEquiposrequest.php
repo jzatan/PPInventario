@@ -29,6 +29,7 @@ class updateEquiposrequest extends FormRequest
             //
             'categoria_id' => 'required',
             'usuario_id' => 'required',
+            'area_id' => 'required',
             'nombre_equipo' => 'required|max:255,'.$equipoid,
             'marca' => 'required|max:30',
             'modelo' => 'required|max:30',

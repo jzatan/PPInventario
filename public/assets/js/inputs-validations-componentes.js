@@ -1,3 +1,4 @@
+/*script que me permite agregar componentes en la vista equipos.index*/
 // Selecciona todos los botones de "AGREGAR COMPONENTE" en el DOM
 document.querySelectorAll('[id^="agregarComponente"]').forEach(boton => {
     boton.addEventListener('click', function() {
@@ -23,6 +24,7 @@ function eliminarFila(boton) {
 
 
 
+/*script que me permite agregar componentes en la vista componentes.index */
 document.getElementById('agregarComponente').addEventListener('click', function() {
     const tbody = document.getElementById('cuerpo-componentes');
     const fila = document.createElement('tr');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\storeEquiposrequest;
 use App\Http\Requests\updateEquiposrequest;
+use App\Models\area;
 use App\Models\categoria;
 use App\Models\componente;
 use App\Models\equipo;
@@ -11,6 +12,7 @@ use App\Models\prestamo;
 use App\Models\usuario;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class equipoController extends Controller
@@ -24,8 +26,15 @@ class equipoController extends Controller
     {
         //
         //$componentes = componente::get();
+
+        // Obtener el id_area del usuario autenticado
+        $idAreaUsuario = Auth::user()->area_id ?? '';
+
+        // Filtrar los equipos por el área del usuario
+        $equipos = Equipo::where('area_id', $idAreaUsuario)->get();
+
         $prestamos = prestamo::get();
-        $equipos = equipo::get();
+        //$equipos = equipo::get();
         $componentes = Componente::with('equipos')->get(); // Asegúrate de que el modelo Componente tenga la relación definida
         return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos','prestamos'));
     }
@@ -49,8 +58,9 @@ class equipoController extends Controller
     {
         //
         $usuarios = usuario::where('estado', 1)->get();
+        $areas = area::where('estado', 1)->get();
         $categorias = categoria::get();
-        return view('activos-informaticos.registro-equipos', compact('usuarios', 'categorias'));
+        return view('activos-informaticos.registro-equipos', compact('usuarios', 'categorias','areas'));
     }
 
     /**
@@ -103,7 +113,8 @@ class equipoController extends Controller
     {
         $usuarios = usuario::where('estado', 1)->get();
         $categorias = categoria::get();
-        return view('activos-informaticos.update-activos-informaticos', ['equipo' => $equipo], compact('usuarios', 'categorias'));
+        $areas = area::where('estado', 1)->get();
+        return view('activos-informaticos.update-activos-informaticos', ['equipo' => $equipo], compact('usuarios', 'categorias','areas'));
     }
 
     /**

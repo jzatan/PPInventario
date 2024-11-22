@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->date('fecha_envio');
             $table->date('fecha_retorno');
-            $table->string('problema', 300);
-            $table->string('diagnostico', 300);
+            $table->string('problema', 300)->nullable();
+            $table->string('diagnostico', 300)->nullable();
             $table->tinyInteger('estado_mantenimiento')->default(1);
-            $table->string('observaciones', 250);
+            $table->string('observaciones', 250)->nullable();
             $table->timestamps();
         });
     }

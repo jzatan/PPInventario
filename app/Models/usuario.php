@@ -25,7 +25,7 @@ class usuario extends Model
     }
 
     public function mantenimiento_usuario(){
-        return $this->hasMany(mantenimiento::class);
+        return $this->hasMany(mantenimiento::class,'id_usuario_mantenimiento');
     }
 
     public function mantenimiento_admin(){

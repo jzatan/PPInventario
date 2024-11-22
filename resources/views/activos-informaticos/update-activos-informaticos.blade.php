@@ -20,7 +20,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group row mb-sm-0">
-                            <div class="form-group col-sm-3 mb-3 mb-sm-3">
+                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="categoria_id">CATEGORIA</label>
                                 <!-- Llamamos a las areas en estado 1 = activos-->
                                 <select class="form-control" id="categoria_id" name="categoria_id">
@@ -29,12 +29,18 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm-3 mb-3 mb-sm-3">
-                                <label for="usuario_id">USUARIO</label>
+                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
+                                <label for="usuario_id">REGISTRADO POR</label>
                                 <!-- Llamamos a las areas en estado 1 = activos-->
-                                <select class="form-control" id="usuario_id" name="usuario_id">
-                                    @foreach ($usuarios as $item)
-                                    <option value="{{$item->id}}" {{ $equipo->usuario_id == $item->id ? 'selected' : '' }}>{{$item->nombres}} {{$item->apellidos}}</option>
+                                <input type="text" class="form-control text-center" title="solo números" value="{{$equipo->usuarios->nombres ?? ''}} {{$equipo->usuarios->apellidos ?? ''}}" disabled>
+                                <input hidden type="text" id="usuario_id" name="usuario_id" value="{{$equipo->usuario_id ?? ''}}">
+                            </div>
+                            <div class="form-group col-sm-6 mb-3 mb-sm-3">
+                                <label for="area_id">DESTINO</label>
+                                <!-- Llamamos a las areas en estado 1 = activos-->
+                                <select class="form-control" id="area_id" name="area_id">
+                                    @foreach ($areas as $item)
+                                    <option value="{{$item->id}}" {{ $equipo->area_id == $item->id ? 'selected' : '' }}>{{$item->nombre_area ?? ''}}</option>
                                     @endforeach
                                 </select>
                             </div>

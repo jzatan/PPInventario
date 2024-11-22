@@ -18,8 +18,6 @@ return new class extends Migration
             $table->foreignId('equipo_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('id_prestador_area');
             $table->foreign('id_prestador_area')->references('id')->on('areas');
-            $table->unsignedBigInteger('id_prestario');
-            $table->foreign('id_prestario')->references('id')->on('usuarios');
             $table->string('cod_prestamo',10);
             $table->date('fecha_prestamo');
             $table->date('fecha_devolucion');

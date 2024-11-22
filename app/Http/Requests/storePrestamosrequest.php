@@ -27,7 +27,6 @@ class storePrestamosrequest extends FormRequest
             //
             'equipo_id' => 'required',
             'id_prestador_area' => 'required',
-            'id_prestario' => 'required',
             'cod_prestamo' => 'required|max:10',
             'fecha_prestamo' => 'required|date',
             'fecha_devolucion' => 'required|date',

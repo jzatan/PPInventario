@@ -1,15 +1,15 @@
 <!--LLamas a las normativas de la plantilla template-->
 @extends('template')
 
-@section('title','Editar usuario')
+@section('title','Editar empleado')
 
 @push('css')
 
 <link href=" {{asset ('/assets/css/cards.css')}}" rel="stylesheet" />
 @endpush
 
-@section('header-nav', 'Editar usuario')
-@section('header', 'Editar usuario')
+@section('header-nav', 'Editar empleado')
+@section('header', 'Editar empleado')
 
 @section('content')
 <div class="container-fluid py-4">
@@ -17,14 +17,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">Editar usuario</h5>
+                    <h5 class="title">Editar empleado</h5>
                 </div>
                 <div class="card-body">
                     <form id="userForm-update" action="{{route('usuarios.update', $usuario -> id)}}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-md-4 pr-1">
+                            <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label for="area_id">ARÉA DE TRABAJO</label>
                                     <!-- Llamamos a las areas en estado 1 = activos-->
@@ -35,21 +35,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-5 px-1">
+                            <div class="col-md-6 px-1">
                                 <div class="form-group">
-                                    <label for="usuario">USUARIO</label>
-                                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Crear usuario" value="{{$usuario -> usuario}}" required>
+                                    <label for="correo">CORREO ELECTRONICO</label>
+                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="Crear usuario" value="{{$usuario -> correo ?? ''}}" required>
                                 </div>
                             </div>
-                            <div class="col-md-3 pl-1">
-                                <div class="form-group">
-                                    <label for="contraseña">CONTRASEÑA</label>
-                                    <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña" maxlength="8" value="{{$usuario -> contraseña}}" oninput="validatePassword()" required>
-                                    <div id="contraseña-error" class="invalid-feedback">
-                                        La contraseña debe tener exactamente 8 caracteres.
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-6 pr-1">
@@ -99,10 +91,19 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="d-flex flex-column justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-ciclos">Confirmar</button>
-                            <button type="reset" class="btn btn-secondary btn-ciclos" data-bs-dismiss="modal">Cancelar</button>
+                        <div class="form-group row mb-sm-0">
+                            <div class="form-group col-sm-2 mb-3 mb-sm-3">
+                                <hr>
+                                <a class="btn btn-primary w-100" href="{{route ('usuarios.index')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="form-group col-sm-5 mb-3 mb-sm-3">
+                                <hr>
+                                <button type="reset" class="btn btn-secondary w-100"><span class="btn-inner--icon"><i class="fa fa-save text-secondary me-2"></i></span>CANCELAR</button>
+                            </div>
+                            <div class="form-group col-sm-5 mb-3 mb-sm-3">
+                                <hr>
+                                <button type="submit" class="btn w-100"><span class="btn-inner--icon"></span>ACTUALIZAR</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -118,7 +119,7 @@
                     <h5 class="card-title text-center">{{$usuario->nombres}} {{$usuario->apellidos ?? ''}}</h5>
                     <p class="card-text text-center">
                         {{$usuario -> areas-> nombre_area}} <br>
-                        {{$usuario -> usuario}} <br>
+                        {{$usuario -> correo}} <br>
                         {{$usuario -> telefono}} <br>
                     </p>
                     <div class="icon-block text-center"><a href="https://www.facebook.com/SubRegiondeSaludMorroponHuancabamba"><i class="fa fa-facebook"></i></a><a href="https://x.com/sub_region">
