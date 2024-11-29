@@ -65,7 +65,7 @@ class componenteController extends Controller
             ]);
         }
 
-        return redirect()->route('equipos.index')->with('success', 'Componentes guardados correctamente.');
+        return redirect()->route('equiposregistrados')->with('success', 'Componentes guardados correctamente.');
     }
 
     /**
