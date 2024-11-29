@@ -22,20 +22,21 @@
                     <form id="form-users" action="{{route('users.store')}}" method="post">
                         @csrf
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
-                            <label for="area_id">AREA</label>
-                            <!-- Llamamos a las areas en estado 1 = activos-->
+                        <input type="hidden" name="area_id" id="area_id_hidden">
+                    
+                            <!-- Llamamos a las areas en estado 1 = activos
                             <select class="form-control" id="area_id" name="area_id">
                                 @foreach ($areas as $item)
                                 <option class="text-center" value="{{$item->id}}">{{$item->nombre_area ?? ''}}</option>
                                 @endforeach
-                            </select>
+                            </select>-->
                         </div>
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                             <label for="usuario_id">EMPLEADO</label>
                             <!-- Llamamos a las áreas en estado 1 = activos-->
                             <select class="form-control" id="usuario_id" name="usuario_id" onchange="updateHiddenInput()">
                                 @foreach ($usuarios as $item)
-                                <option class="text-center" value="{{$item->id}}">{{$item->nombres ?? ''}} {{$item->apellidos ?? ''}}</option>
+                                <option class="text-center" data-area-id="{{$item->area_id}}" value="{{$item->id}}">{{$item->nombres ?? ''}} {{$item->apellidos ?? ''}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -51,6 +52,17 @@
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="password"> CONTRASEÑA</label>
                                 <input type="text" class="form-control" name="password" id="password" title="Solo alfanumericos" placeholder="example@.com" oninput="" required>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-sm-0">
+                            <div class="form-group col-sm-12 mb-3 mb-sm-3">
+                                <label for="role"> ASIGNAR ROL</label>
+                                <select name="role" class="form-control" id="role">
+                                    <option value="" class="text-center" disabled selected>- SELECCIONE ROL - </option>
+                                    @foreach ($roles as $item)
+                                    <option value="{{$item->name}}" class="text-center" @selected(old('role')==$item->name)>{{$item->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row mb-sm-0">
@@ -74,7 +86,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">USUARIO</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">EMAIL</th>
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ROL</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Estado</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Acciones</th>
                                 </tr>
@@ -87,7 +99,8 @@
                                         <p class="text-center text-xs text-secondary mb-0">{{$user -> areas -> nombre_area}}</p>
                                     </td>
                                     <td>
-                                        <h6 class="text-center text-sm mb-0">{{$user -> email}}</h6>
+                                        <!--<h6 class="text-center text-sm mb-0">{{$user -> email}}</h6>-->
+                                        <h6 class="text-center text-sm mb-0">{{$user->getRoleNames()->first()}}</h6>
                                     </td>
                                     <td>
                                         @if ($user->estado == 1)
@@ -133,7 +146,7 @@
                         </div>
                     </div>
 
-                    <!--- updateAreas modal -->
+                    <!--- update usuarios modal -->
                     <div class="modal fade" id="updateUser-{{$user -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -172,6 +185,22 @@
                                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                             <label for="email"> CORREO</label>
                                             <input type="email" class="form-control text-center" name="email" id="email" title="Solo alfanumericos" placeholder="example@.com" oninput="" value="{{$user -> email ?? ''}}" required>
+                                        </div>
+
+
+
+
+                                        <div class="form-group col-sm-12 mb-3 mb-sm-3">
+                                        <label for="role"> ASIGNACIÓN DE ROL</label>
+                                            <select name="role" id="role" class="form-select">
+                                                @foreach ($roles as $item)
+                                                @if (in_array($item->name, $user->roles->pluck('name')->toArray()))
+                                                <option selected class="text-center" value="{{$item->name}}" @selected(old('role')==$item->name)>{{$item->name}}</option>
+                                                @else
+                                                <option class="text-center" value="{{$item->name}}" @selected(old('role')==$item->name)>{{$item->name}}</option>
+                                                @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <!---<div class="form-group row mb-sm-0">
                                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
@@ -221,23 +250,28 @@
 
 @push('js')
 <script>
-    // Función para actualizar el valor del input oculto
-    function updateHiddenInput() {
-        // Obtén el select y el input oculto
-        const selectElement = document.getElementById('usuario_id');
-        const hiddenInput = document.getElementById('name');
+   function updateHiddenInput() {
+    // Obtén el select y los inputs ocultos
+    const selectElement = document.getElementById('usuario_id');
+    const hiddenInputName = document.getElementById('name');
+    const hiddenInputArea = document.getElementById('area_id_hidden');
 
-        // Obtén el texto seleccionado del select
-        const selectedText = selectElement.options[selectElement.selectedIndex].text;
+    // Obtén el texto seleccionado del select
+    const selectedText = selectElement.options[selectElement.selectedIndex].text;
 
-        // Asigna el texto seleccionado al input oculto
-        hiddenInput.value = selectedText;
-    }
+    // Obtén el área (data-area-id)
+    const areaId = selectElement.options[selectElement.selectedIndex].getAttribute('data-area-id');
 
-    // Ejecuta la función al cargar la página
-    document.addEventListener('DOMContentLoaded', function() {
-        updateHiddenInput();
-    });
+    // Asigna los valores al input oculto
+    hiddenInputName.value = selectedText;
+    hiddenInputArea.value = areaId;
+}
+
+// Ejecuta la función al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    updateHiddenInput();
+});
+
 </script>
 <script>
     // Función para actualizar el input oculto dentro del modal

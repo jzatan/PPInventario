@@ -18,11 +18,11 @@ class UsuariosSeeder extends Seeder
         //
         usuario::insert([
             [
-                'nombres' => 'ADMINISTRACION',
-                'apellidos' => 'MASTER',
+                'nombres' => 'Jorge Miguel',
+                'apellidos' => 'Zatan Aponte',
                 'dni' => '0000000',
                 'telefono' => '000000000',
-                'correo' => 'example@gmail.com',
+                'correo' => 'correo@gmail.com',
                 'area_id' => '1',
             ],
         ]);

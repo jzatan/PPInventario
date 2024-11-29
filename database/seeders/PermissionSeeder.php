@@ -32,6 +32,7 @@ class PermissionSeeder extends Seeder
             //equipos
             'ver-equipos',
             'ver-equipos-disponibles-prestamos',
+            'ver-equipos-registrados-administrador',
             'create-equipos',
             'store-equipos',
             'update-equipos',
@@ -63,10 +64,19 @@ class PermissionSeeder extends Seeder
             //mantenimientos
 
             'ver-mantenimientos',
+            'ver-mantenimientos-generales',
             'create-mantenimientos',
             'store-mantenimientos',
             'edit-mantenimeintos',
-            'update-mantenimientos'
+            'update-mantenimientos',
+
+            //role
+            'ver-roles',
+            'create-roles',
+            'store-roles',
+            'editar-roles',
+            'update-roles',
+            'delete-roles'
 
         ];
         foreach($permisos as $permiso){

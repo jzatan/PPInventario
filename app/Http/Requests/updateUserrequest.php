@@ -32,6 +32,7 @@ class updateUserrequest extends FormRequest
             'usuario_id' =>'required',
             'name' => 'required|max:255,'.$userid,
             'email' => 'required|max:255',
+             'role' => 'required|exists:roles,name'
             //'password' => 'required|max:255'
         ];
     }

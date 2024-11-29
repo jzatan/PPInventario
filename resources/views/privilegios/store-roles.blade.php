@@ -19,7 +19,7 @@
             <div class="card mb-4">
                 <div class="card-body mb-4">
                     <h1 class="text-center text-uppercase text-primary text-lg font-weight-bolder mb-4">REGISTRAR ROL</h1>
-                    <form id="form-users" action="{{route('roles.store')}}" method="post">
+                    <form id="form-roles" action="{{route('roles.store')}}" method="post">
                         @csrf
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                             <label for="name"> NOMBRE DEL ROL</label>
@@ -29,15 +29,20 @@
                             <label for="permisos"> PERMISOS PARA EL ROL</label>
                             @foreach ($permisos as $item)
                             <div class="form-check">
-                                <input id="{{$item -> id}}" class="form-check-input" type="checkbox" name="permission[]" value="{{$item->id}}">
-                                <label for="{{$item -> id}}" class="form-check-label">{{$item -> name}}</label>
+                                <input id="{{$item->id}}" class="form-check-input" type="checkbox" name="permission[]" value="{{$item->id}}">
+                                <label for="{{$item->id}}" class="form-check-label">{{$item -> name}}</label>
                             </div>
                             @endforeach
                         </div>
                         <div class="form-group row mb-sm-0">
-                            <div class="form-group col-sm-12 mb-3 mb-sm-3">
+                            <div class="form-group col-sm-2 mb-3 mb-sm-3">
                                 <hr>
-                                <button type="submit" class="btn btn-primary w-100"><span class="btn-inner--icon"><i class="fa fa-save text-white me-2"></i></span>REGISTRAR</button>
+                                <a class="btn btn-primary w-100" href="{{route ('roles.index')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="form-group col-sm-10 mb-3 mb-sm-3">
+                                <hr>
+
+                                <button type="submit" class="btn btn-white w-100"><span class="btn-inner--icon"><i class="fa fa-save text-primary me-2"></i></span>REGISTRAR</button>
                             </div>
                         </div>
                     </form>

@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\DB;
 
 class componenteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        $this->middleware('permission:create-componentes', ['only' => ['create']]);
+        $this->middleware('permission:store-componentes', ['only' => ['store']]);
+        $this->middleware('permission:update-componentes', ['only' => ['update']]);
+        $this->middleware('permission:delete-componentes', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         //
@@ -117,14 +120,12 @@ class componenteController extends Controller
     public function destroy($id)
     {
         //
-        try{
+        try {
             $componente = componente::findOrFail($id);
-            $componente -> delete();
+            $componente->delete();
             return redirect()->route('equipos.index');
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->route('equipos.index');
-
         }
     }
 }

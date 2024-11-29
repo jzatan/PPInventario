@@ -11,22 +11,39 @@ use App\Models\prestamo;
 use App\Models\usuario;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class prestamoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    function __construct() {
+
+        $this->middleware('permission:ver-prestamos',['only'=>['index']]);
+        $this->middleware('permission:create-prestamos',['only'=>['store']]);
+        $this->middleware('permission:store-prestamos',['only'=>['store']]);
+        $this->middleware('permission:edit-prestamos',['only'=>['update']]);
+        $this->middleware('permission:update-prestamos',['only'=>['update']]);
+        $this->middleware('permission:delete-prestamos',['only'=>['destroy']]);
+
+    }
+
     public function index()
+
+
     {
         //
+        $idAreaUsuario = Auth::user()->area_id ?? '';
 
-        $prestamos = prestamo::where('estado', 0)->get();
+
+
+        $prestamos = Prestamo::where('estado', 0)
+                     ->whereHas('equipos', function ($query) use ($idAreaUsuario) {
+                         $query->where('area_id', $idAreaUsuario);
+                     })
+                     ->get();
         //$prestamos = prestamo::get();
-        $equipos = equipo::whereIn('estado', [3])->get(); //??
+        $equipos = equipo::where('area_id', $idAreaUsuario)->get(); //??
         $componentes = componente::with('equipos')->get();
         return view('prestamos.control-prestamos', compact('componentes', 'equipos', 'prestamos'));
     }

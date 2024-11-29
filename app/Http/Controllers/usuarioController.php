@@ -13,13 +13,22 @@ use Illuminate\Support\Facades\Redirect;
 
 class usuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct() {
+
+        $this->middleware('permission:ver-empleados',['only'=>['index']]);
+        $this->middleware('permission:store-empleados',['only'=>['store']]);
+        $this->middleware('permission:edit-empleados',['only'=>['update']]);
+        $this->middleware('permission:update-empleados',['only'=>['update']]);
+        $this->middleware('permission:delete-empleados',['only'=>['destroy']]);
+
+    }
+
     public function index()
     {
+
+
+        
         // Llama a todos los usuarios creados
         $usuarios = usuario::get();
 

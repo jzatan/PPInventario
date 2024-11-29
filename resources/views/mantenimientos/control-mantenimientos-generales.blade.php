@@ -1,15 +1,15 @@
 <!--LLamas a las normativas de la plantilla template-->
 @extends('template')
 
-@section('title','Control de mantenimientos')
+@section('title','Control de mantenimientos generales')
 
 @push('css')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 @endpush
 
-@section('header-nav', 'Control de mantenimientos')
-@section('header', 'Control de mantenimientos')
+@section('header-nav', 'Control de mantenimientos generales')
+@section('header', 'Control de mantenimientos generales')
 @section('content')
 <!--Contenido-->
 

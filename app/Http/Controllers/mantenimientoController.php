@@ -13,21 +13,43 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf; //OJO 
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class mantenimientoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+    function __construct() {
+
+        $this->middleware('permission:ver-mantenimientos',['only'=>['index']]);
+        $this->middleware('permission:ver-mantenimientos-generales',['only'=>['mantenimientosgenerales']]);
+        $this->middleware('permission:create-mantenimientos',['only'=>['create']]);
+        $this->middleware('permission:store-mantenimientos',['only'=>['store']]);
+        $this->middleware('permission:edit-mantenimientos',['only'=>['edit']]);
+        $this->middleware('permission:update-mantenimientos',['only'=>['destroy']]);
+        
+
+    }
+
+    public function mantenimientosgenerales(){
+         // Filtrar los equipos por el área del usuario
+         $equipos = Equipo::where('estado_prestamo',1)->get();
+         $mantenimientos = mantenimiento::all();
+         return view('mantenimientos.control-mantenimientos-generales', compact('equipos', 'mantenimientos'));
+
+    }
 
 
     public function index()
     {
         //
+
+        $idAreaUsuario = Auth::user()->area_id ?? '';
+
+        // Filtrar los equipos por el área del usuario
+        $equipos = Equipo::where('area_id', $idAreaUsuario)->get();
+
         $mantenimientos = mantenimiento::all();
-        $equipos = equipo::get(); //
+        //$equipos = equipo::get(); //
 
 
         return view('mantenimientos.control-mantenimientos', compact('equipos', 'mantenimientos'));
@@ -101,7 +123,7 @@ class mantenimientoController extends Controller
 
 
             DB::commit();
-            return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento registrado correctamente');
+            return redirect()->route('mantenimientosgenerales')->with('success', 'Mantenimiento registrado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('Error al registrar el mantenimiento: ' . $e->getMessage());

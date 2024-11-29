@@ -53,7 +53,7 @@
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">TIEMPO ADQUISICIÓN</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">estado</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">OBSERVACIONES</th>
-                                    @can('edit-equipos') <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ACCIONES</th> @endcan
+                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,14 +109,12 @@
                                     <td>
                                         <h6 class="text-center text-sm mb-0">{{$equipo -> observacion ?? 'SIN OBSERVACIONES'}}</h6>
                                     </td>
-                                    @can('edit-equipos')
                                     <td>
                                         <div class="ms-auto text-center">
                                             <a title="EDITAR" class="btn btn-link text-info px-3 mb-0" href="{{route ('equipos.edit', ['equipo' => $equipo])}}"><i class="fas fa-pencil-alt text-info" aria-hidden="true"></i></a>
                                             <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#deleteEquipoModal-{{$equipo->id}}"><i class="far fa-trash-alt"></i></a>
                                         </div>
                                     </td>
-                                    @endcan
                                 </tr>
 
                                 <!-- WARNING DELETE EQUIPOS -->
@@ -332,11 +330,10 @@
                                                                     </span>
                                                                 </span>
                                                             </div>
-                                                            @can('create-componentes')
+
                                                             <a class="btn btn-white" data-bs-toggle="modal" data-bs-target="#createComponente-{{$equipo -> id}}">
                                                                 <i class="fas fa-laptop-code text-primary me-2" aria-hidden="true"></i>REGISTRAR COMPONENTES
                                                             </a>
-                                                            @endcan
 
                                                         </div>
                                                     </div>

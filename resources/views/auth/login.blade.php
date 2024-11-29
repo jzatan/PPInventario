@@ -58,7 +58,7 @@
                       <input type="email" name="email" class="form-control form-control-lg" placeholder="Correo" aria-label="email">
                     </div>
                     <div class="mb-3 position-relative">
-                      <input type="text" id="contraseña" name="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="contraseña" autocomplete="off">
+                      <input type="password" id="contraseña" name="password" class="form-control form-control-lg" placeholder="Contraseña" aria-label="contraseña" autocomplete="off">
                       <button type="button" id="togglePassword" class="btn btn-sm btn-outline-secondary position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
                         Mostrar
                       </button>

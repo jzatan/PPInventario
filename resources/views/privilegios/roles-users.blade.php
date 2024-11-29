@@ -18,6 +18,15 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col justify-content-start">
+                            <div class="input-group mb-4">
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <a class="btn btn-white" href="{{route('roles.create')}}"><i class="fa-solid fa-user-gear text-primary me-2" aria-hidden="true"></i>REGISTRAR ROL</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -36,8 +45,8 @@
                                     </td>
                                     <td>
                                         <div class="ms-auto text-center">
-                                            <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal" data-bs-target="#updateUser-{{$role-> id}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
-                                            <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteUser-{{$role -> id}}"><i class="far fa-trash-alt"></i></a>
+                                            <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" href="{{route('roles.edit', ['role'=>$role])}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
+                                            <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteRole-{{$role -> id}}"><i class="far fa-trash-alt"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -47,7 +56,7 @@
                     </div>
                     @foreach ($roles as $rol)
                     <!--- Warning delete modal -->
-                    <div class="modal fade" id="deleteRol-{{$role -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteRole-{{$role -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -57,7 +66,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ¿Seguro que deseas eliminar el usuario?
+                                    ¿Seguro que deseas eliminar el rol?
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="text-white btn bg-secondary" data-bs-dismiss="modal">Close</button>

@@ -29,7 +29,8 @@ class storeUserrequest extends FormRequest
             'usuario_id' =>'required',
             'name' => 'required|max:255',
             'email' => 'required|max:255',
-            'password' => 'required|max:255'
+            'password' => 'required|max:255',
+            'role' => 'required|exists:roles,name'
 
         ];
     }

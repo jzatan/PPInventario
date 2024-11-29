@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class areaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
+    function __construct() {
+
+        $this->middleware('permission:ver-areas',['only'=>['index']]);
+        $this->middleware('permission:store-areas',['only'=>['store']]);
+        $this->middleware('permission:update-areas',['only'=>['update']]);
+        $this->middleware('permission:delete-areas',['only'=>['destroy']]);
+
+    }
+
     public function index()
     {
         // LLamamos al modelo areas

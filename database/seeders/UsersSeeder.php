@@ -21,9 +21,9 @@ class UsersSeeder extends Seeder
 
             'usuario_id' => '1',
             'area_id' => '1',
-            'name' => 'Administrador Master',
-            'email' => 'administrador_master@gmail.com',
-            'password' => bcrypt('adminmaste2024@'),
+            'name' => 'Jorge Miguel Zatan Aponte',
+            'email' => 'administracion@gmail.com',
+            'password' => bcrypt('administrador2024@'),
 
         ]);
 

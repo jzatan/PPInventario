@@ -11,23 +11,31 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class userController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct() {
+
+        $this->middleware('permission:ver-usuarios',['only'=>['index']]);
+        $this->middleware('permission:store-usuarios',['only'=>['store']]);
+        $this->middleware('permission:update-usuarios',['only'=>['update']]);
+        $this->middleware('permission:delete-usuarios',['only'=>['destroy']]);
+
+    }
+
+
     public function index()
     {
         //
+        $roles = Role::all();
         $areas = area::get();
         $users = User::get();
-        // LLamo a los usuarios que esten en  estado 1 = activos
+        // LLamo a los empleados que esten en  estado 1 = activos
         $usuarios = usuario::where('estado', 1)->get();
 
-        return view('privilegios.users', ['users' => $users], compact('usuarios', 'areas'));
+        return view('privilegios.users', ['users' => $users], compact('usuarios', 'areas', 'roles'));
     }
 
     /**
@@ -59,6 +67,7 @@ class userController extends Controller
 
             // Crea el usuario con los datos validados que incluyen la contraseña encriptada
             $user = User::create($validatedData);
+            $user->assignRole($request->role);
 
             DB::commit();
             return redirect()->route('users.index')->with('success', 'Usuario registrado exitosamente');
@@ -107,6 +116,7 @@ class userController extends Controller
         try {
             DB::beginTransaction();
             $user->update($request->validated());
+            $user->syncRoles([$request->role]);
 
             DB::commit();
             return redirect()->route('users.index');

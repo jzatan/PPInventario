@@ -17,11 +17,20 @@ use Illuminate\Support\Facades\DB;
 
 class equipoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct()
+    {
+
+        $this->middleware('permission:ver-equipos', ['only' => ['index']]);
+        $this->middleware('permission:create-equipos', ['only' => ['create']]);
+        $this->middleware('permission:store-equipos', ['only' => ['store']]);
+        $this->middleware('permission:edit-equipos', ['only' => ['edit']]);
+        $this->middleware('permission:update-equipos', ['only' => ['update']]);
+        $this->middleware('permission:delete-equipos', ['only' => ['destroy']]);
+        $this->middleware('permission:ver-equipos-disponibles-prestamos', ['only' => ['activosdisponibles']]);
+        $this->middleware('permission:ver-equipos-registrados-administrador', ['only' => ['activosregistrados']]);
+    }
+
     public function index()
     {
         //
@@ -36,17 +45,28 @@ class equipoController extends Controller
         $prestamos = prestamo::get();
         //$equipos = equipo::get();
         $componentes = Componente::with('equipos')->get(); // Asegúrate de que el modelo Componente tenga la relación definida
-        return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos','prestamos'));
+        return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos', 'prestamos'));
     }
 
 
     // ruta que me permite visualizar los activos informaticos disponibles
 
     public function activosdisponibles()
+
     {
-        $equipos = equipo::whereIn('estado', [1,2])->get();
+        $idAreaUsuario = Auth::user()->area_id ?? '';
+        // Filtrar los equipos por el área del usuario
+        $equipos = Equipo::where('area_id', $idAreaUsuario)->whereIn('estado', [1, 2])->get();
         $componentes = componente::with('equipos')->get();
         return view('prestamos.prestamo-activos', compact('componentes', 'equipos'));
+    }
+
+    public function activosregistrados()
+    {
+        $prestamos = prestamo::get();
+        $equipos = equipo::all();
+        $componentes = componente::with('equipos')->get();
+        return view('activos-informaticos.activos-registrados', compact('componentes', 'equipos', 'prestamos'));
     }
 
     /**
@@ -60,7 +80,7 @@ class equipoController extends Controller
         $usuarios = usuario::where('estado', 1)->get();
         $areas = area::where('estado', 1)->get();
         $categorias = categoria::get();
-        return view('activos-informaticos.registro-equipos', compact('usuarios', 'categorias','areas'));
+        return view('activos-informaticos.registro-equipos', compact('usuarios', 'categorias', 'areas'));
     }
 
     /**
@@ -89,7 +109,7 @@ class equipoController extends Controller
             return redirect()->back()->withErrors('Error al registrar el equipo.')->withInput();
         }
         // Redirigir a la vista de creación de equipos por defecto
-        return redirect()->route('equipos.index')->with('success', 'Equipo registrado exitosamente.');
+        return redirect()->route('activosregistrados')->with('success', 'Equipo registrado exitosamente.');
     }
 
     /**
@@ -114,7 +134,7 @@ class equipoController extends Controller
         $usuarios = usuario::where('estado', 1)->get();
         $categorias = categoria::get();
         $areas = area::where('estado', 1)->get();
-        return view('activos-informaticos.update-activos-informaticos', ['equipo' => $equipo], compact('usuarios', 'categorias','areas'));
+        return view('activos-informaticos.update-activos-informaticos', ['equipo' => $equipo], compact('usuarios', 'categorias', 'areas'));
     }
 
     /**
@@ -132,10 +152,10 @@ class equipoController extends Controller
             DB::beginTransaction();
             $equipo->update($request->validated());
             DB::commit();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         }
     }
 
@@ -152,9 +172,9 @@ class equipoController extends Controller
         try {
             $equipo = equipo::findOrFail($id);
             $equipo->delete();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         } catch (Exception $e) {
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         }
     }
 

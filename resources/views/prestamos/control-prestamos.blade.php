@@ -105,7 +105,6 @@
                             </div>
                             <div class="ms-auto text-end">
                                 <a class="btn btn-link text-info text-gradient px-3 mb-0 btn-devolucion" data-id="{{$prestamo -> id}}" data-equipo-id="{{$prestamo -> equipos -> id}}" href="javascript:;"><i class="fas fa-sliders-h me-2"></i>Devolucion</a>
-                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteprestamo-{{$prestamo -> id}}"><i class="far fa-trash-alt me-2"></i>Delete</a>
                                 <a class="btn btn-link text-dark px-3 mb-0" href="{{route ('prestamos.edit', ['prestamo' => $prestamo])}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                             </div>
                         </li>

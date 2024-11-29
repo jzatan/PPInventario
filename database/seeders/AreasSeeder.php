@@ -18,8 +18,25 @@ class AreasSeeder extends Seeder
         area::insert([
             [
                 'nombre_area' => 'ADMINISTRACION',
-                'ubicacion' => '-'
+                'ubicacion' => 'DSRSMH - ADMIN'
+
             ],
+            [
+                'nombre_area' => 'AREA DE LOGISTICA E INFORMATICA',
+                'ubicacion' => 'DSRSMH - LOG E INF'
+            ],
+            [
+                'nombre_area' => 'AREA DE RECURSOS HUMANOS',
+                'ubicacion' => 'DSRSMH - RRHH'
+            ],
+            [
+                'nombre_area' => 'AREA DE MANTENIMIENTO',
+                'ubicacion' => 'DSRSMH - MANT'
+            ],
+            [
+                'nombre_area' => 'ALMACEN',
+                'ubicacion' => 'DSRSMH - ALMACEN'
+            ]
         ]);
     }
 }

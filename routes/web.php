@@ -30,6 +30,11 @@ Route::post('/login',[loginController::class,'login']);
 
 Route::get('/',[homeController::class,'index']) -> name('panel');
 
+//Ruta para poder visualizar todos los mantenimientos generales
+Route::get('mantenimientos/generales',[mantenimientoController::class,'mantenimientosgenerales']) -> name('mantenimientosgenerales');
+
+// Ruta para poder visualizar todos los activos informaticos registrados
+Route::get('/activos/registrados',[equipoController::class,'activosregistrados']) -> name('activosregistrados');
 
 // Ruta para visualizar activos informaticos disponibles
 Route::get('/activos/disponibles',[equipoController::class, 'activosdisponibles']) -> name('activosdisponibles');
