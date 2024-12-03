@@ -5,9 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href=" {{asset ('/assets/img/favicon - copia.png')}}">
   <title>
-    Login
+  DSRSMH | LOGIN
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -64,21 +64,21 @@
                       </button>
                     </div>
 
-                    <div class="form-check form-switch">
+                    <!--<div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe">
                       <label class="form-check-label" for="rememberMe">
                         Recuérdame
                       </label>
-                    </div>
+                    </div>-->
                     <div class="text-center">
                       <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">
                         Inicia sesión
                       </button>
                     </div>
-                  </form>
+                  </form><br>
                   @if ($errors->any())
                   @foreach ($errors->all() as $item)
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <div class="alert alert-danger text-white alert-dismissible fade show" role="alert">
                     {{$item}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
@@ -117,6 +117,22 @@
     </section>
   </main>
   <!--   Core JS Files   -->
+  <script>
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('contraseña');
+    const icon = this.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+</script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>

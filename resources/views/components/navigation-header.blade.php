@@ -9,9 +9,13 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <h6 class="font-weight-bolder text-white mb-0"> Bienvenido {{auth()->user()->name ?? ''}}</h6>
-                <a href="{{route('logout')}}"><i class="text-white fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href=""  data-bs-toggle="modal" data-bs-target="#logout"><h6 class="font-weight-bolder text-white mb-0"> Bienvenido {{auth()->user()->name ?? ''}}</h6></a>
+                <!--<a href="{{route('logout')}}"><i class="text-white fa-solid fa-arrow-right-from-bracket"></i></a>-->
+                </li>
             </div>
+
+           
+
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">

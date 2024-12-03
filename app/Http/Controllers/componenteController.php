@@ -65,7 +65,7 @@ class componenteController extends Controller
             ]);
         }
 
-        return redirect()->route('equiposregistrados')->with('success', 'Componentes guardados correctamente.');
+        return redirect()->route('activosregistrados')->with('success', 'Componentes guardados correctamente.');
     }
 
     /**
@@ -104,10 +104,10 @@ class componenteController extends Controller
             DB::beginTransaction();
             $componente->update($request->validated());
             DB::commit();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         }
     }
 
@@ -123,9 +123,9 @@ class componenteController extends Controller
         try {
             $componente = componente::findOrFail($id);
             $componente->delete();
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         } catch (Exception $e) {
-            return redirect()->route('equipos.index');
+            return redirect()->route('activosregistrados');
         }
     }
 }

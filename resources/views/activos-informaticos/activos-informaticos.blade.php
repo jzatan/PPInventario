@@ -312,9 +312,12 @@
                                                                                         {{$componente->descripcion}}
                                                                                     </td>
                                                                                     <td class="text-end">
+                                                                                        @can('update-componentes')
                                                                                         <a class="btn btn-link text-dark px-3 mb-0" href="" data-bs-toggle="modal" data-bs-target="#updateComponente-{{ $componente->id }}">
                                                                                             <i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i>
                                                                                         </a>
+                                                                                        @endcan
+                                                                                        @can('delete-componentes')
                                                                                         <form action="{{ route('componentes.destroy', ['componente' => $componente->id]) }}" method="POST" style="display: inline;">
                                                                                             @method('DELETE')
                                                                                             @csrf
@@ -322,6 +325,7 @@
                                                                                                 <i class="far fa-trash-alt"></i>
                                                                                             </button>
                                                                                         </form>
+                                                                                        @endcan
                                                                                     </td>
 
                                                                                 </tr>

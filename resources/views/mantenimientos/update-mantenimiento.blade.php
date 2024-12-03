@@ -37,7 +37,7 @@
                                 <!-- Llamamos a las areas en estado 1 = activos-->
                                 <select class="form-control" id="id_usuario_mantenimiento" name="id_usuario_mantenimiento">
                                     @foreach ($usuarios as $item)
-                                    <option value="{{$item->id}}">{{$item->nombres}} {{$item->apellidos}}</option>
+                                    <option value="{{$item->id}}" {{ $mantenimiento->id_usuario_mantenimiento == $item->id ? 'selected' : '' }}>{{$item->nombres}} {{$item->apellidos}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -83,7 +83,7 @@
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <hr>
-                                <a class="btn btn-primary w-100" href="{{route ('mantenimientos.index')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i>REGRESAR</a>
+                                <a class="btn btn-primary w-100" href="{{route ('mantenimientosgenerales')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i>REGRESAR</a>
                             </div>
                             <div class="form-group col-sm-8 mb-3 mb-sm-3">
                                 <hr>

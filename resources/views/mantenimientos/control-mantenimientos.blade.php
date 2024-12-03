@@ -179,7 +179,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="ms-auto text-center">
-                                                                <a title="EDITAR" class="btn btn-link text-info px-3 mb-0" href="{{route ('mantenimientos.edit', ['mantenimiento' => $mantenimiento])}}"><i class="fas fa-pencil-alt text-info" aria-hidden="true"></i></a>
+                                                            @can('edit-mantenimiento')<a title="EDITAR" class="btn btn-link text-info px-3 mb-0" href="{{route ('mantenimientos.edit', ['mantenimiento' => $mantenimiento])}}"><i class="fas fa-pencil-alt text-info" aria-hidden="true"></i></a>@endcan
                                                                 <a title="DESCARGAR REPORTE" class="btn-pdf">
                                                                     <i class="fas fa-file-pdf text-danger"></i>
                                                                 </a>

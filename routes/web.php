@@ -47,7 +47,7 @@ Route::get('/verificar-codregistro', [equipoController::class, 'verificarcodregi
 
 
 Route::get('/carnicero', function () {
-    return view('activos-informaticos.registro-equipos');
+    return view('panel.dashboard-home');
 });
 
 

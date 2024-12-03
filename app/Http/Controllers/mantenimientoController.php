@@ -24,8 +24,8 @@ class mantenimientoController extends Controller
         $this->middleware('permission:ver-mantenimientos-generales',['only'=>['mantenimientosgenerales']]);
         $this->middleware('permission:create-mantenimientos',['only'=>['create']]);
         $this->middleware('permission:store-mantenimientos',['only'=>['store']]);
-        $this->middleware('permission:edit-mantenimientos',['only'=>['edit']]);
-        $this->middleware('permission:update-mantenimientos',['only'=>['destroy']]);
+        $this->middleware('permission:edit-mantenimeintos',['only'=>['edit']]);
+        $this->middleware('permission:update-mantenimientos',['only'=>['update']]);
         
 
     }
@@ -196,10 +196,10 @@ class mantenimientoController extends Controller
             });
     
             // Redirigir con éxito
-            return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento y detalles actualizados correctamente.');
+            return redirect()->route('mantenimientosgenerales')->with('success', 'Mantenimiento y detalles actualizados correctamente.');
         } catch (\Exception $e) {
             // Capturar cualquier error y redirigir con mensaje de error
-            return redirect()->route('mantenimientos.index')->with('error', 'Ocurrió un error al actualizar: ' . $e->getMessage());
+            return redirect()->route('mantenimientosgenerales')->with('error', 'Ocurrió un error al actualizar: ' . $e->getMessage());
         }
     }
 

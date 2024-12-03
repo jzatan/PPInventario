@@ -101,5 +101,25 @@
 @endsection
 
 @push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+
+        // Configurar fecha mínima y máxima en el input de fecha de préstamo
+        const fechaPrestamo = document.getElementById('fecha_envio');
+        fechaPrestamo.min = today;
+        fechaPrestamo.max = today;
+
+        // Configurar fecha mínima en el input de fecha de devolución
+        const fechaDevolucion = document.getElementById('fecha_retorno');
+        fechaDevolucion.min = today;
+
+        // Actualizar la fecha mínima de devolución al seleccionar la fecha de préstamo (aunque es fija en este caso)
+        fechaPrestamo.addEventListener('change', function() {
+            fechaDevolucion.min = fechaPrestamo.value;
+        });
+    });
+</script>
+
 
 @endpush
