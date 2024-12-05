@@ -112,7 +112,7 @@
                                     <td>
                                         <div class="ms-auto text-center">
                                             <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal" data-bs-target="#updateUser-{{$user-> id}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
-                                            <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteUser-{{$user -> id}}"><i class="far fa-trash-alt"></i></a>
+                                            <!--<a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteUser-{{$user -> id}}"><i class="far fa-trash-alt"></i></a>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -122,7 +122,7 @@
                     </div>
                     @foreach ($users as $user)
                     <!--- Warning delete modal -->
-                    <div class="modal fade" id="deleteUser-{{$user -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!--<div class="modal fade" id="deleteUser-{{$user -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <!--- update usuarios modal -->
                     <div class="modal fade" id="updateUser-{{$user -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -112,7 +112,7 @@ class userController extends Controller
      */
     public function update(updateUserrequest $request, user $user)
     {
-        //
+        //dd($request);
         try {
             DB::beginTransaction();
             $user->update($request->validated());

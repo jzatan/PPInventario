@@ -76,7 +76,7 @@
                                     <td>
                                         <div class="ms-auto text-center">
                                             <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal" data-bs-target="#updateArea-{{$area -> id}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
-                                            <a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteArea-{{$area -> id}}"><i class="far fa-trash-alt"></i></a>
+                                            <!--<a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteArea-{{$area -> id}}"><i class="far fa-trash-alt"></i></a>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -86,7 +86,7 @@
                     </div>
                     @foreach ($areas as $area)
                     <!--- Warning delete modal -->
-                    <div class="modal fade" id="deleteArea-{{$area -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!--<div class="modal fade" id="deleteArea-{{$area -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <!--- updateAreas modal -->
                     <div class="modal fade" id="updateArea-{{$area -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
