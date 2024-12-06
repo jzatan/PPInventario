@@ -84,7 +84,7 @@
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <hr>
-                                <a class="btn btn-primary w-100" href="{{route ('equipos.index')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i>REGRESAR</a>
+                                <a class="btn btn-primary w-100" href="{{route ('mantenimientosgenerales')}}"><i class="fas fa-reply me-2" aria-hidden="true"></i>REGRESAR</a>
                             </div>
                             <div class="form-group col-sm-8 mb-3 mb-sm-3">
                                 <hr>

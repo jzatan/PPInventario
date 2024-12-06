@@ -25,10 +25,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/logout',[logoutController::class,'logout'])->name('logout');
 
-Route::get('/login',[loginController::class,'index']) -> name('login');
+Route::get('/',[loginController::class,'index']) -> name('login');
 Route::post('/login',[loginController::class,'login']);
 
-Route::get('/',[homeController::class,'index']) -> name('panel');
+Route::get('/panel/dashboard',[homeController::class,'index']) -> name('panel');
 
 //Ruta para poder visualizar todos los mantenimientos generales
 Route::get('mantenimientos/generales',[mantenimientoController::class,'mantenimientosgenerales']) -> name('mantenimientosgenerales');

@@ -106,7 +106,7 @@
                             </div>
                             <div class="form-group col-sm-5 mb-3 mb-sm-3">
                                 <hr>
-                                <button type="submit" class="btn w-100" name="action" value="register_and_redirect"><span class="btn-inner--icon"><i class="fas fa-laptop-code text-primary me-2"></i></span> AGREGAR COMPONENTES</button>
+                                <button type="submit" class="btn w-100" name="action" value="register_and_redirect" id="btnAgregarComponentes"><span class="btn-inner--icon"><i class="fas fa-laptop-code text-primary me-2"></i></span> AGREGAR COMPONENTES</button>
                             </div>
                             <div class="form-group col-sm-5 mb-3 mb-sm-3">
                                 <hr>
@@ -131,4 +131,28 @@
     // Establecer el atributo max al input de fecha
     document.getElementById('fecha_adquision').setAttribute('max', today);
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoriaSelect = document.getElementById('categoria_id');
+        const btnAgregarComponentes = document.getElementById('btnAgregarComponentes');
+
+        // Función que habilita o deshabilita el botón según la categoría seleccionada
+        function toggleButton() {
+            const selectedValue = parseInt(categoriaSelect.value);
+            if (selectedValue === 1 || selectedValue === 3) {
+                btnAgregarComponentes.disabled = true;
+            } else {
+                btnAgregarComponentes.disabled = false;
+            }
+        }
+
+        // Llamada inicial para asegurar el estado correcto al cargar la página
+        toggleButton();
+
+        // Evento de cambio en el select
+        categoriaSelect.addEventListener('change', toggleButton);
+    });
+</script>
+
 @endpush

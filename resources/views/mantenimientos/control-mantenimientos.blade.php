@@ -207,17 +207,7 @@
 @endsection
 
 @push('js')
-<!-- SCRIPT QUE PERMITE OCULTAR EL MENU CUANDO ABRIMOS UN MODAL -->
-<script>
-    // Escuchar eventos de apertura y cierre de cualquier modal
-    document.addEventListener('show.bs.modal', function() {
-        document.getElementById('sidenav-main').style.zIndex = '1020'; // Ajusta el z-index del sidenav
-    });
 
-    document.addEventListener('hidden.bs.modal', function() {
-        document.getElementById('sidenav-main').style.zIndex = '1030'; // Restaura el z-index del sidenav
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

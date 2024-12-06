@@ -10,7 +10,7 @@
     <div class=" " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" style="display: flex; flex-direction: column;" href="{{route('panel')}}">
+                <a class="nav-link {{ Route::is('panel') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route('panel')}}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-grip-vertical text-dark text-sm opacity-10"></i>
                     </div>
@@ -25,7 +25,7 @@
 
             @can('ver-usuarios')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('users.index')}}">
+                <a class="nav-link {{ Route::is('users.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('users.index')}}">
                     <i class="fa-solid fa-user-lock me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">USUARIOS</span>
                 </a>
@@ -33,7 +33,7 @@
             @endcan
             @can('ver-roles')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('roles.index')}}">
+                <a class="nav-link {{ Route::is('roles.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('roles.index')}}">
                     <i class="fa-solid fa-key me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">ROLES Y PERMISOS</span>
                 </a>
@@ -41,7 +41,7 @@
             @endcan
             @can('ver-areas')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('areas.index')}}">
+                <a class="nav-link {{ Route::is('areas.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('areas.index')}}">
                     <i class="fa-solid fa-sitemap me-2  text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">AREAS</span>
                 </a>
@@ -49,7 +49,7 @@
             @endcan
             @can('ver-empleados')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('usuarios.index')}}">
+                <a class="nav-link {{ Route::is('usuarios.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('usuarios.index')}}">
                     <i class="fa me-2 fa-users text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">EMPLEADOS</span>
                 </a>
@@ -62,7 +62,7 @@
             @endcan
             @can('ver-equipos')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('equipos.index')}}">
+                <a class="nav-link {{ Route::is('equipos.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('equipos.index')}}">
                     <i class="fa-solid fa-laptop-file me-2  text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">ACTIVOS <br> INFORMATICOS</span>
                 </a>
@@ -70,7 +70,7 @@
             @endcan
             @can('ver-equipos-registrados-administrador')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('activosregistrados')}}">
+                <a class="nav-link {{ Route::is('activosregistrados') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('activosregistrados')}}">
                     <i class="fa-solid fa-laptop-file me-2  text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">ACTIVOS <br> INFORMATICOS</span>
                 </a>
@@ -78,7 +78,7 @@
             @endcan
             @can('create-equipos')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('equipos.create')}}">
+                <a class="nav-link {{ Route::is('equipos.create') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('equipos.create')}}">
                     <i class="fa-solid fa-laptop-medical me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">REGISTRAR ACTIVO </span>
                 </a>
@@ -89,7 +89,7 @@
             </li>
             @can('ver-equipos-disponibles-prestamos')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('activosdisponibles')}}">
+                <a class="nav-link {{ Route::is('activosdisponibles') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('activosdisponibles')}}">
                     <i class="fa-solid fa-person-chalkboard me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">REGISTRAR <br> PRESTAMOS</span>
                 </a>
@@ -97,7 +97,7 @@
             @endcan
             @can('ver-prestamos')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('prestamos.index')}}">
+                <a class="nav-link {{ Route::is('prestamos.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('prestamos.index')}}">
                     <i class="fas me-2 fa-chart-line text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">CONTROL DE <br> PRESTAMOS</span>
                 </a>
@@ -108,7 +108,7 @@
             </li>
             @can('ver-mantenimientos')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('mantenimientos.index')}}">
+                <a class="nav-link {{ Route::is('mantenimientos.index') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('mantenimientos.index')}}">
                     <i class="fa-solid fa-screwdriver-wrench me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">CONTROL DE <br>MANTENIMIENTOS <br> CORRECTIVOS</span>
                 </a>
@@ -116,7 +116,7 @@
             @endcan
             @can('ver-mantenimientos-generales')
             <li class="nav-item">
-                <a class="nav-link" style="display: flex; flex-direction: column;" href="{{route ('mantenimientosgenerales')}}">
+                <a class="nav-link {{ Route::is('mantenimientosgenerales') ? 'active' : '' }}" style="display: flex; flex-direction: column;" href="{{route ('mantenimientosgenerales')}}">
                     <i class="fa-solid fa-screwdriver-wrench me-2 text-dark text-center text-sm opacity-10"></i>
                     <span class="nav-link-text text-dark text-center">CONTROL DE <br>MANTENIMIENTOS <br> CORRECTIVOS</span>
                 </a>

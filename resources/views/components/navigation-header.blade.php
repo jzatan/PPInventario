@@ -7,26 +7,13 @@
             </ol>
             <h6 class="font-weight-bolder text-white mb-0">@yield('header')</h6>
         </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <a href=""  data-bs-toggle="modal" data-bs-target="#logout"><h6 class="font-weight-bolder text-white mb-0"> Bienvenido {{auth()->user()->name ?? ''}}</h6></a>
-                <!--<a href="{{route('logout')}}"><i class="text-white fa-solid fa-arrow-right-from-bracket"></i></a>-->
-                </li>
-            </div>
-
-           
-
-            <ul class="navbar-nav  justify-content-end">
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line bg-white"></i>
-                            <i class="sidenav-toggler-line bg-white"></i>
-                            <i class="sidenav-toggler-line bg-white"></i>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+        <div class="collapse navbar-nav  justify-content-end navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <nav aria-label="breadcrumb">
+                <a href="" data-bs-toggle="modal" data-bs-target="#logout">
+                    <h6 class="font-weight-bolder text-white mb-0"> Bienvenido {{auth()->user()->name ?? ''}}</h6>
+                </a>
+                <h6 class="opacity-5 white text-white mb-0 text-end"> {{auth()->user()->areas->nombre_area ?? ''}}</h6>
+            </nav>
         </div>
     </div>
 </nav>

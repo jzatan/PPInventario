@@ -79,12 +79,22 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset ('assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
+    <!-- SCRIPT QUE PERMITE OCULTAR EL MENU CUANDO ABRIMOS UN MODAL -->
+    <script>
+        // Escuchar eventos de apertura y cierre de cualquier modal
+        document.addEventListener('show.bs.modal', function() {
+            document.getElementById('sidenav-main').style.zIndex = '1020'; // Ajusta el z-index del sidenav
+        });
 
+        document.addEventListener('hidden.bs.modal', function() {
+            document.getElementById('sidenav-main').style.zIndex = '1030'; // Restaura el z-index del sidenav
+        });
+    </script>
     @stack('js')
 </body>
 @endauth
 @guest
-@include('welcome')
+@include('errors.404')
 @endguest
 
 </html>

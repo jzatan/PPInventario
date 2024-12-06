@@ -462,63 +462,104 @@
                     <!-- fin UpdateComponentes modal -->
                     @endforeach
 
+                    <!-- Historial de prestamos -->
                     @foreach ($equipos as $equipo)
                     <div class="modal fade" id="historialModal-{{$equipo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <ul class="list-group">
-                                                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <div class="d-flex flex-column">
-                                                                <h6 class="mb-3 text-sm">
-                                                                    {{$equipo->nombre_equipo ?? 'ERROR'}}
-                                                                    {{$equipo->marca ?? ''}}
-                                                                    {{$equipo->modelo ?? ''}}
-                                                                </h6>
-                                                                <span class="mb-2 text-xs">HISTORIAL DE PRESTAMOS:
-                                                                    <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
-                                                                        @php
-                                                                        $historial_prestamos = $prestamos->where('equipo_id', $equipo->id);
-                                                                        @endphp
+                                    <ul class="list-group">
+                                        <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                            <!--- Tabla de historial de prestamos -->
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="d-flex flex-column">
+                                                        <h6 class="mb-3 text-sm text-center text-primary">
+                                                            - HISTORIAL DE PRESTAMOS: {{$equipo->nombre_equipo ?? 'ERROR'}}
+                                                            {{$equipo->marca ?? ''}}
+                                                            {{$equipo->modelo ?? ''}} -
+                                                        </h6>
+                                                        <span class="mb-2 text-xs text-center">
+                                                            <span class="text-dark ms-sm-2 font-weight-bold text-uppercase">
+                                                                @php
+                                                                $historial_prestamos = $prestamos->where('equipo_id', $equipo->id);
+                                                                @endphp
 
-                                                                        @if ($historial_prestamos->isEmpty())
-                                                                        "SIN PRESTAMOS REGISTRADOS"
-                                                                        <hr>
-                                                                        @else
-                                                                        <table class="table">
-                                                                            <tbody>
-                                                                                @foreach ($historial_prestamos as $prestamo)
-                                                                                <tr>
-                                                                                    <td class="text-start">
-                                                                                        COD. PRESTAMO :{{$prestamo->cod_prestamo}} <br>
-                                                                                        DATE_PRESTAMO: {{$prestamo -> fecha_prestamo}} <br>
-                                                                                        DATE_DEVOLUCION: {{$prestamo ->fecha_devolucion}} <br>
-                                                                                        ESTADO_PRESTAMO:
-                                                                                        @if ($prestamo->estado == 0)
-                                                                                        <span class="badge bg-success">PRESTADO</span>
-                                                                                        @else
-                                                                                        <span class="badge bg-warning">DEVUELTO</span>
-                                                                                        @endif
-                                                                                        <br>******************************************************
-                                                                                    </td>
-                                                                                </tr>
-                                                                                @endforeach
-                                                                            </tbody>
-                                                                        </table>
-                                                                        @endif
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                                                                @if ($historial_prestamos->isEmpty())
+                                                                "NO EXISTEN REGISTROS DE PRESTAMOS <br>
+                                                                REALIZADOS A ESTE ACTIVO INFORMATICO"
+                                                                <hr>
+                                                                @else
+                                                                <table class="table table-responsive align-items-center mb-8" id="tabla-prestamos">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">ID</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">COD. PRESTAMO</th>
+                                                                            <th hidden class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">ACTIVO INFORMATICO</th>
+                                                                            <th hidden class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">PRESTAtARIO</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">PRESTADOR</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">FECHA DE PRESTAMO</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">FECHA DE DEVOLUCIÓN</th>
+                                                                            <th hidden class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">OBSERVACIONES</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">ESTADO</th>
+                                                                            <th class="text-center text-uppercase text-dark text-xs font-weight-bolder opacity-7">ACCIONES</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($historial_prestamos as $prestamo)
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo-> id}}</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo-> cod_prestamo}}</h6>
+                                                                            </td>
+                                                                            <td hidden>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo-> equipos -> nombre_equipo ?? ''}} {{$prestamo-> equipos -> marca ?? ''}} {{$prestamo-> equipos -> modelo ?? ''}}</h6>
+                                                                            </td>
+                                                                            <td hidden>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo -> equipos -> areas -> nombre_area ?? ''}} </h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo-> usuario_prestador_area -> nombre_area}}</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0"> {{\Carbon\Carbon::parse($prestamo -> fecha_prestamo)->format('d-m-Y')}}</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0"> {{\Carbon\Carbon::parse($prestamo -> fecha_devolucion)->format('d-m-Y')}}</h6>
+                                                                            </td>
+                                                                            <td hidden>
+                                                                                <h6 class="ms-auto text-center text-sm mb-0">{{$prestamo-> observaciones ?? 'SIN OBSERVACIONES'}}</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                @if ($prestamo->estado == 0)
+                                                                                <span class="badge bg-danger">ACTIVO PRESTADO</span>
+                                                                                @else
+                                                                                <span class="badge bg-success">ACTIVO DEVUELTO</span>
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="ms-auto text-center">
+                                                                                    <a title="DESCARGAR REPORTE" class="btn-pdf">
+                                                                                        <i class="fas fa-file-pdf text-danger"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                <div class="d-flex justify-content-center">
+                                                                    {{ $prestamos->links() }}
+                                                                </div>
+                                                                @endif
+                                                            </span>
+                                                        </span>
                                                     </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                 </div>
                             </div>
                         </div>
@@ -550,6 +591,76 @@
     }
     busqueda.addEventListener('keyup', buscaTabla);
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleccionar todos los botones con la clase 'btn-pdf'
+        const botonesPdf = document.querySelectorAll('.btn-pdf');
+
+        // Agregar un listener a cada botón
+        botonesPdf.forEach((boton) => {
+            boton.addEventListener('click', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+
+                // Obtener la fila asociada al botón
+                const fila = boton.closest('tr');
+                if (!fila) return;
+
+                // Extraer los datos de la fila
+                const datos = [
+                    `COD. PRESTAMO: ${fila.cells[1].innerText}`,
+                    `ACTIVO INFORMATICO: ${fila.cells[2].innerText}`,
+                    `PRESTAMISTA: ${fila.cells[3].innerText}`,
+                    `PRESTADOR: ${fila.cells[4].innerText}`,
+                    `FECHA DE PRESTAMO: ${fila.cells[5].innerText}`,
+                    `FECHA DE DEVOLUCION: ${fila.cells[6].innerText}`,
+                    `OBSERVACIONES: ${fila.cells[7].innerText}`,
+                    `ESTADO: ${fila.cells[8].innerText}`,
+                ];
+
+                // Crear el PDF
+                const {
+                    jsPDF
+                } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Agregar título
+                doc.setFontSize(16);
+                doc.text('REPORTE DE PRESTAMO - ', 20, 20);
+
+                // Configurar márgenes y ancho máximo
+                const marginX = 20; // Margen izquierdo
+                const maxWidth = 160; // Ancho máximo para el texto
+                let y = 40; // Coordenada Y inicial (ajustada para dejar espacio suficiente debajo del título)
+
+                // Agregar los datos al PDF con alineación y separación adecuada
+                doc.setFontSize(12); // Tamaño de letra
+                datos.forEach((linea) => {
+                    const partes = linea.split(':'); // Dividir el texto en "Etiqueta" y "Valor"
+                    const etiqueta = partes[0] + ':'; // Parte antes de ":"
+                    const valor = partes.slice(1).join(':').trim(); // Parte después de ":"
+
+                    // Escribir la etiqueta
+                    doc.text(etiqueta, marginX, y);
+
+                    // Escribir el valor con ajuste de líneas largas
+                    const lineasAjustadas = doc.splitTextToSize(valor, maxWidth - 50); // Ajuste de líneas largas
+                    doc.text(lineasAjustadas, marginX + 60, y); // Sangría para el valor
+
+                    // Incrementar Y según el número de líneas ajustadas
+                    y += lineasAjustadas.length * 7; // Altura dinámica según las líneas usadas
+                    y += 2; // Espaciado adicional para separar cada campo
+                });
+
+                // Descargar el PDF
+                doc.save(`reporte_prestamo_${fila.rowIndex}.pdf`);
+            });
+        });
+    });
+</script>
+
+
+
 
 <script src="{{asset ('assets/js/equipos-informaticos.js')}}"></script>
 <script src="{{asset ('assets/js/inputs-validations-componentes.js')}}"></script>

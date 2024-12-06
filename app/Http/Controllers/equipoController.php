@@ -42,7 +42,8 @@ class equipoController extends Controller
         // Filtrar los equipos por el área del usuario
         $equipos = Equipo::where('area_id', $idAreaUsuario)->get();
 
-        $prestamos = prestamo::get();
+        $prestamos = prestamo::paginate(3);
+      
         //$equipos = equipo::get();
         $componentes = Componente::with('equipos')->get(); // Asegúrate de que el modelo Componente tenga la relación definida
         return view('activos-informaticos.activos-informaticos', compact('componentes', 'equipos', 'prestamos'));
@@ -63,7 +64,7 @@ class equipoController extends Controller
 
     public function activosregistrados()
     {
-        $prestamos = prestamo::get();
+        $prestamos = prestamo::paginate(8);
         $equipos = equipo::all();
         $componentes = componente::with('equipos')->get();
         return view('activos-informaticos.activos-registrados', compact('componentes', 'equipos', 'prestamos'));
