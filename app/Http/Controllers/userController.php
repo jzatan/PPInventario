@@ -16,13 +16,13 @@ use Spatie\Permission\Models\Role;
 class userController extends Controller
 {
 
-    function __construct() {
+    function __construct()
+    {
 
-        $this->middleware('permission:ver-usuarios',['only'=>['index']]);
-        $this->middleware('permission:store-usuarios',['only'=>['store']]);
-        $this->middleware('permission:update-usuarios',['only'=>['update']]);
-        $this->middleware('permission:delete-usuarios',['only'=>['destroy']]);
-
+        $this->middleware('permission:ver-usuarios', ['only' => ['index']]);
+        $this->middleware('permission:store-usuarios', ['only' => ['store']]);
+        $this->middleware('permission:update-usuarios', ['only' => ['update']]);
+        $this->middleware('permission:delete-usuarios', ['only' => ['destroy']]);
     }
 
 
@@ -142,5 +142,14 @@ class userController extends Controller
         } catch (Exception $e) {
             return redirect()->route('users.index');
         }
+    }
+
+    public function verificaremail(Request $request)
+    {
+        $email = $request->input('email');
+        // Verifica si el email existe en la base de datos
+        $exists = User::where('email', $email)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 }

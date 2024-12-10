@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
      *
      * @return void
      */
-    public function run():void
+    public function run(): void
     {
         $user = User::create([
 
@@ -28,7 +28,42 @@ class UsersSeeder extends Seeder
         ]);
 
         $rol = Role::create(['name' => 'administrador']);
-        $permisos = Permission::pluck('id','id')->all();
+        $permisosespecificos = [
+            'ver-areas',
+            'store-areas',
+            'update-areas',
+            'delete-areas',
+            'ver-equipos',
+            'ver-equipos-disponibles-prestamos',
+            'ver-prestamos',
+            'create-prestamos',
+            'store-prestamos',
+            'edit-prestamos',
+            'update-prestamos',
+            'delete-prestamos',
+            'ver-usuarios',
+            'store-usuarios',
+            'update-usuarios',
+            'delete-usuarios',
+            'ver-empleados',
+            'store-empleados',
+            'edit-empleados',
+            'update-empleados',
+            'delete-empleados',
+            'ver-mantenimientos',
+            'ver-roles',
+            'create-roles',
+            'store-roles',
+            'editar-roles',
+            'update-roles',
+            'delete-roles'
+        ];
+        foreach ($permisosespecificos as $permiso) {
+            Permission::firstOrCreate(['name' => $permiso]);
+        }
+
+        // Obtener los permisos específicos y asignarlos al rol
+        $permisos = Permission::whereIn('name', $permisosespecificos)->get();
         $rol->syncPermissions($permisos);
         $user->assignRole('administrador');
     }

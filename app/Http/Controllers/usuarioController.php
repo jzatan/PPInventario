@@ -18,7 +18,7 @@ class usuarioController extends Controller
 
         $this->middleware('permission:ver-empleados',['only'=>['index']]);
         $this->middleware('permission:store-empleados',['only'=>['store']]);
-        $this->middleware('permission:edit-empleados',['only'=>['update']]);
+        $this->middleware('permission:edit-empleados',['only'=>['edit']]);
         $this->middleware('permission:update-empleados',['only'=>['update']]);
         $this->middleware('permission:delete-empleados',['only'=>['destroy']]);
 
@@ -30,7 +30,12 @@ class usuarioController extends Controller
 
         
         // Llama a todos los usuarios creados
-        $usuarios = usuario::get();
+
+       // $usuarios = usuario::paginate(2)->except(1);
+        $usuarios = usuario::where('id', '!=', '1')->paginate(20);
+
+
+
 
         // LLama a todas las areas creadas en estado 1 = activas
         $areas = area::where('estado',1)->get();

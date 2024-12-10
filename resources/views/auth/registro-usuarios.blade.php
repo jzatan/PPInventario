@@ -45,7 +45,7 @@
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">TELEFONO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">CORREO</th>
                                     <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">ESTADO</th>
-                                    <th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Acciones</th>
+                                    @can('edit-empleados')<th class="text-center text-uppercase text-primary text-xs font-weight-bolder opacity-7">Acciones</th>@endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,12 +75,14 @@
                                         @endif
                                     </td>
 
+                                    @can('edit-empleados')
                                     <td>
                                         <div class="ms-auto text-center">
                                             <a title="EDITAR" class="btn btn-link text-dark px-3 mb-0" href="{{route ('usuarios.edit', ['usuario' => $usuario])}}"><i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i></a>
                                             <!--<a title="ELIMINAR" class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#deleteeModal-{{$usuario -> id}}"><i class="far fa-trash-alt"></i></a>-->
                                         </div>
                                     </td>
+                                    @endcan
                                     <!--- Warning delete -->
                                     <!--<div class="modal fade" id="deleteeModal-{{$usuario -> id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -122,7 +124,7 @@
                                                             <div class="form-group">
                                                                 <label for="area_id">ÁREA DE TRABAJO</label>
                                                                 <!-- Llamamos a las areas en estado 1 = activos-->
-                                                                <select class="form-control" id="area_id" name="area_id">
+                                                                <select class="form-control text-center" id="area_id" name="area_id">
                                                                     @foreach ($areas as $item)
                                                                     <option value="{{$item->id}}">{{$item->nombre_area}}</option>
                                                                     @endforeach
@@ -130,29 +132,29 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="nombres"> NOMBRES DEL EMPLEADO</label>
-                                                                <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="Ingrese nombres" oninput="validateNombres(this)" required>
+                                                                <input type="text" class="form-control  text-center" name="nombres" id="nombres" title="Ingrese nombres" placeholder="Ingrese nombres" oninput="nombres_apellidos(this)" required>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="apellidos"> APELLIDOS DEL EMPLEADO</label>
-                                                                <input type="text" class="form-control" id="apellidos" name="apellidos" title="Formato Fecha" placeholder="Ingrese apellidos" oninput="validateApellidos()" required>
+                                                                <input type="text" class="form-control  text-center" id="apellidos" name="apellidos" title="Ingrese apellidos" placeholder="Ingrese apellidos" oninput="nombres_apellidos(this)" required>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="form-group col-sm-12 mb-3 mb-sm-0">
                                                                     <label for="correo">CORREO ELECTRONICO</label>
-                                                                    <input type="email" class="form-control" id="correo" name="correo" placeholder="example@gmail.com" required oninput="">
+                                                                    <input type="email" class="form-control  text-center" id="correo" name="correo" placeholder="example@gmail.com" required oninput="correo_electronico(this)">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
                                                                     <label for="dni">DOCUMENTO DE IDENTIDAD (DNI)</label>
-                                                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="#######" required maxlength="8" pattern="\d{8}" oninput="validateDNI()">
+                                                                    <input type="text" class="form-control  text-center" id="dni" name="dni" placeholder="#######" required maxlength="8" pattern="\d{8}" oninput="solo_numeros(this)">
                                                                     <div id="dni-error" class="invalid-feedback">
                                                                         El DNI debe tener 8 dígitos numéricos.
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
                                                                     <label for="telefono">TELÉFONO</label>
-                                                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="999-999-999" required maxlength="9" pattern="\d{9}" oninput="validateTelefono()">
+                                                                    <input type="text" class="form-control  text-center" id="telefono" name="telefono" placeholder="999-999-999" required maxlength="9" pattern="\d{9}" oninput="solo_numeros(this)">
                                                                     <div id="telefono-error" class="invalid-feedback">
                                                                         El teléfono debe tener 8 dígitos numéricos.
                                                                     </div>
@@ -172,6 +174,9 @@
                                     <!--- fin Create user -->
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center">
+                            {{ $usuarios->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -182,22 +187,9 @@
 @endsection
 
 @push('js')
-<script>
-    var busqueda = document.getElementById('buscar');
-    var table = document.getElementById("tabla-empleados").tBodies[0];
 
-    buscaTabla = function() {
-        texto = busqueda.value.toLowerCase();
-        var r = 0;
-        while (row = table.rows[r++]) {
-            if (row.innerText.toLowerCase().indexOf(texto) !== -1)
-                row.style.display = null;
-            else
-                row.style.display = 'none';
-        }
-    }
-    busqueda.addEventListener('keyup', buscaTabla);
-</script>
-<script src="{{asset ('assets/js/imputs-validations.js')}}"></script>
+<script src="{{asset ('assets/js/empleados-scripts.js')}}"></script>
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
+
 
 @endpush

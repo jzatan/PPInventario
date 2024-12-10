@@ -23,7 +23,7 @@
                         @csrf
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                             <label for="name"> NOMBRE DEL ROL</label>
-                            <input type="text" class="form-control" name="name" id="name" title="Solo alfanumericos" placeholder="NOMBRE ROL" oninput="" required>
+                            <input type="text" class="form-control" name="name" id="name" title="Solo alfanumericos" placeholder="NOMBRE ROL" oninput="nombre_rol(this)" required>
                         </div>
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                             <label for="permisos"> PERMISOS PARA EL ROL</label>
@@ -55,4 +55,5 @@
 @endsection
 
 @push('js')
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 @endpush

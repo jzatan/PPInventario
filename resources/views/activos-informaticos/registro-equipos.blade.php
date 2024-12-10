@@ -22,7 +22,7 @@
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="categoria_id">CATEGORIA</label>
                                 <!-- Llamamos a las areas en estado 1 = activos-->
-                                <select class="form-control" id="categoria_id" name="categoria_id">
+                                <select class="form-control text-center" id="categoria_id" name="categoria_id">
                                     @foreach ($categorias as $item)
                                     <option value="{{$item->id}}">{{$item->nombre_categoria}}</option>
                                     @endforeach
@@ -44,31 +44,31 @@
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="cod_registro"> CODIGO DE REGISTRO</label>
-                                <input type="text" class="form-control text-center" id="cod_registro" name="cod_registro" title="solo números" placeholder="INGRESE COD. REGISTRO" required oninput="validateCODREGISTRO()">
+                                <input type="text" class="form-control text-center" id="cod_registro" name="cod_registro" title="solo números" placeholder="INGRESE COD. REGISTRO" required oninput="solo_numeros(this)">
                                 <div id="codregistroMessage" class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="ord_compra"> ORDEN DE COMPRA</label>
-                                <input type="text" class="form-control text-center" id="ord_compra" name="ord_compra" title="solo letras" placeholder="ORDEN DE COMPRA">
+                                <input type="text" class="form-control text-center" id="ord_compra" name="ord_compra" title="solo letras" placeholder="ORDEN DE COMPRA" oninput="orden_compra(this)">
                             </div>
                         </div>
 
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-3 mb-3 mb-sm-3">
                                 <label for="nombre_equipo"> NOMBRE DE EQUIPO</label>
-                                <input type="text" class="form-control text-center" name="nombre_equipo" id="nombre_equipo" title="Solo alfanumericos" placeholder="NOMBRE EQUIPO" oninput="validateNOMEQUIPOS()" required>
+                                <input type="text" class="form-control text-center" name="nombre_equipo" id="nombre_equipo" title="Solo alfanumericos" placeholder="NOMBRE EQUIPO" oninput="nombres_equipo(this)" required>
                             </div>
                             <div class="form-group col-sm-3 mb-3 mb-sm-3">
                                 <label for="marca"> MARCA</label>
-                                <input type="text" class="form-control text-center" id="marca" name="marca" title="Solo alfanumericos" placeholder="MARCA" required oninput="validateMarca()">
+                                <input type="text" class="form-control text-center" id="marca" name="marca" title="Solo alfanumericos" placeholder="MARCA" required oninput="marca_equipo(this)">
                             </div>
                             <div class="form-group col-sm-3 mb-3 mb-sm-3">
                                 <label for="modelo"> MODELO</label>
-                                <input type="text" class="form-control text-center" id="modelo" name="modelo" title="Solo alfanumericos" placeholder="MODELO" oninput="validateModelo()" required>
+                                <input type="text" class="form-control text-center" id="modelo" name="modelo" title="Solo alfanumericos" placeholder="MODELO" oninput="modelo_equipo(this)" required>
                             </div>
                             <div class="form-group col-sm-3 mb-3 mb-sm-0">
                                 <label for="color">COLOR DEL EQUIPO</label>
-                                <input type="text" class="form-control text-center" name="color" id="color" title="Solo letras" placeholder="COLOR" oninput="" required>
+                                <input type="text" class="form-control text-center" name="color" id="color" title="Solo letras" placeholder="COLOR" oninput="color_equipo(this)" required>
                             </div>
                             <!--<div class="form-group col-sm-3 mb-3 mb-sm-0">
                                 <label for="nro_serie">NÚMERO DE SERIE</label>
@@ -78,7 +78,7 @@
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="nro_serie">NÚMERO DE SERIE</label>
-                                <input type="text" class="form-control text-center" name="nro_serie" id="nro_serie" title="Solo alfanumericos" placeholder="NRO. SERIE" oninput="validateNROSERIE()" required>
+                                <input type="text" class="form-control text-center" name="nro_serie" id="nro_serie" title="Solo alfanumericos" placeholder="NRO. SERIE" oninput="numero_serie(this)" required>
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="fecha_adquision">FECHA DE ADQUISION</label>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group col-sm-12 mb-3 mb-sm-3">
                             <label for="observacion">OBSERVACIONES</label>
-                            <textarea class="form-control" name="observacion" id="observacion" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES"></textarea>
+                            <textarea class="form-control" name="observacion" id="observacion" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES" oninput="observaciones(this)"></textarea>
                         </div>
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-2 mb-3 mb-sm-3">
@@ -123,16 +123,19 @@
 @endsection
 
 @push('js')
-<script src="{{asset ('assets/js/inputs-validations-equipos.js')}}"></script>
-<!--Script que permite validar fechas-->
-<script>
-    // Obtener la fecha actual en formato YYYY-MM-DD
-    const today = new Date().toISOString().split('T')[0];
-    // Establecer el atributo max al input de fecha
-    document.getElementById('fecha_adquision').setAttribute('max', today);
-</script>
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 
 <script>
+    /* 06. Script que me permite validar fechas*/
+
+    // Obtener la fecha actual en formato YYYY-MM-DD
+    const today = new Date().toISOString().split("T")[0];
+    // Establecer el atributo max al input de fecha
+    document.getElementById("fecha_adquision").setAttribute("max", today);
+</script>
+<script>
+    /* 07. Script que me permite validar el boton de agregar componentes, depediendo de la categoria*/
+
     document.addEventListener('DOMContentLoaded', function() {
         const categoriaSelect = document.getElementById('categoria_id');
         const btnAgregarComponentes = document.getElementById('btnAgregarComponentes');
@@ -154,5 +157,7 @@
         categoriaSelect.addEventListener('change', toggleButton);
     });
 </script>
+
+
 
 @endpush

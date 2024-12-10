@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label for="area_id">ARÉA DE TRABAJO</label>
                                     <!-- Llamamos a las areas en estado 1 = activos-->
-                                    <select class="form-control" id="area_id" name="area_id">
+                                    <select class="form-control text-center" id="area_id" name="area_id">
                                         @foreach ($areas as $item)
                                         <option value="{{$item->id}}" {{ $usuario->area_id == $item->id ? 'selected' : '' }}>{{$item->nombre_area}}</option>
                                         @endforeach
@@ -38,7 +38,7 @@
                             <div class="col-md-6 px-1">
                                 <div class="form-group">
                                     <label for="correo">CORREO ELECTRONICO</label>
-                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="Crear usuario" value="{{$usuario -> correo ?? ''}}" required>
+                                    <input type="email" class="form-control text-center" id="correo" name="correo" placeholder="Crear usuario" value="{{$usuario -> correo ?? ''}}" oninput="correo_electronico(this)" required>
                                 </div>
                             </div>
 
@@ -47,13 +47,13 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label for="nombres">NOMBRES</label>
-                                    <input type="text" class="form-control" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="nombres de usuario" value="{{$usuario -> nombres}}" oninput="validateNombres()" required>
+                                    <input type="text" class="form-control text-center" name="nombres" id="nombres" title="Solo alfanumericos" placeholder="nombres de usuario" value="{{$usuario -> nombres}}" oninput="nombres_apellidos(this)" required>
                                 </div>
                             </div>
                             <div class="col-md-6 pl-1">
                                 <div class="form-group">
                                     <label for="apellidos">APELLIDOS</label>
-                                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingresar la apellidos" value="{{$usuario -> apellidos}}" oninput="validateApellidos()" required>
+                                    <input type="text" class="form-control text-center" id="apellidos" name="apellidos" placeholder="Ingresar la apellidos" value="{{$usuario -> apellidos}}" oninput="nombres_apellidos(this)" required>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
                                     <label for="dni"> DOCUMENTO DE IDENTIDAD</label>
-                                    <input type="text" class="form-control" id="dni" name="dni" title="Digitos numericos" placeholder="Ingresar dni" value="{{$usuario -> dni}}" pattern="\d{8}" maxlength="8" oninput="validateDNI()" required>
+                                    <input type="text" class="form-control text-center" id="dni" name="dni" title="Digitos numericos" placeholder="Ingresar dni" value="{{$usuario -> dni}}" pattern="\d{8}" maxlength="8" oninput="solo_numeros(this)" required>
                                     <div id="dni-error" class="invalid-feedback">
                                         El DNI debe tener 8 dígitos numéricos.
                                     </div>
@@ -70,7 +70,7 @@
                             <div class="col-md-4 pl-1">
                                 <div class="form-group">
                                     <label for="telefono">TELÉFONO</label>
-                                    <input type="text" class="form-control" id="telefono" name="telefono" title="Ingrese telefono" placeholder="Ingrese telefono" value="{{$usuario -> telefono}}" pattern="\d{9}" maxlength="9" oninput="validateTelefono()" required>
+                                    <input type="text" class="form-control text-center" id="telefono" name="telefono" title="Ingrese telefono" placeholder="Ingrese telefono" value="{{$usuario -> telefono}}" pattern="\d{9}" maxlength="9" oninput="solo_numeros(this)" required>
                                     <div id="telefono-error" class="invalid-feedback">
                                         El teléfono debe tener 9 dígitos numéricos.
                                     </div>
@@ -79,7 +79,7 @@
                             <div class="col-md-4 pl-1">
                                 <div class="form-group">
                                     <label for="estado">ESTADO</label>
-                                    <select class="form-control" id="estado" name="estado" required>
+                                    <select class="form-control text-center" id="estado" name="estado" required>
                                         @if ($usuario->estado == 1)
                                         <option value="1" selected class="text-center">Activo</option>
                                         <option value="0" class="text-center">Inactivo</option>
@@ -133,6 +133,5 @@
 @endsection
 
 @push('js')
-<script src="{{asset ('assets/js/imputs-validations.js')}}"></script>
-
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 @endpush

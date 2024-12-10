@@ -64,7 +64,9 @@ class mantenimientoController extends Controller
     {
 
         // LLamo a los usuarios que esten en  estado 1 = activos
-        $usuarios = usuario::where('estado', 1)->get();
+        $usuarios = usuario::where('id', '!=', 1)->where('estado', 1)->get();
+      
+
 
         // LLamo a las areas que estan en estado 1 = activos
         $areas = area::where('estado', 1)->get();
@@ -151,7 +153,7 @@ class mantenimientoController extends Controller
     {
         //
         // LLamo a los usuarios que esten en  estado 1 = activos
-        $usuarios = usuario::where('estado', 1)->get();
+        $usuarios = usuario::where('id', '!=', 1)->where('estado', 1)->get();
 
         // LLamo a las areas que estan en estado 1 = activos
         $areas = area::where('estado', 1)->get();

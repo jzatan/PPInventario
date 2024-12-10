@@ -285,6 +285,8 @@
                                                                         @elseif ($equipo->estado == 2)
                                                                         <span class="badge bg-success">REGULAR</span>
                                                                         @elseif ($equipo->estado == 3)
+                                                                        <span class="badge bg-danger">INOPERATIVA</span>
+                                                                        @elseif ($equipo->estado == 4)
                                                                         <span class="badge bg-warning">EN MANTENIMIENTO</span>
                                                                         @else
                                                                         <span class="badge bg-light">ESTADO DESCONOCIDO</span>

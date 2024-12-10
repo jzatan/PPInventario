@@ -287,6 +287,8 @@
                                                                         @elseif ($equipo->estado == 2)
                                                                         <span class="badge bg-success">REGULAR</span>
                                                                         @elseif ($equipo->estado == 3)
+                                                                        <span class="badge bg-danger">INOPERATIVA</span>
+                                                                        @elseif ($equipo->estado == 4)
                                                                         <span class="badge bg-warning">EN MANTENIMIENTO</span>
                                                                         @else
                                                                         <span class="badge bg-light">ESTADO DESCONOCIDO</span>
@@ -574,95 +576,12 @@
 @endsection
 
 @push('js')
-<!-- Script que permite buscar los equipos registrados -->
-<script>
-    var busqueda = document.getElementById('buscar');
-    var table = document.getElementById("tabla-equipos").tBodies[0];
-
-    buscaTabla = function() {
-        texto = busqueda.value.toLowerCase();
-        var r = 0;
-        while (row = table.rows[r++]) {
-            if (row.innerText.toLowerCase().indexOf(texto) !== -1)
-                row.style.display = null;
-            else
-                row.style.display = 'none';
-        }
-    }
-    busqueda.addEventListener('keyup', buscaTabla);
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Seleccionar todos los botones con la clase 'btn-pdf'
-        const botonesPdf = document.querySelectorAll('.btn-pdf');
-
-        // Agregar un listener a cada botón
-        botonesPdf.forEach((boton) => {
-            boton.addEventListener('click', function(event) {
-                event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
-
-                // Obtener la fila asociada al botón
-                const fila = boton.closest('tr');
-                if (!fila) return;
-
-                // Extraer los datos de la fila
-                const datos = [
-                    `COD. PRESTAMO: ${fila.cells[1].innerText}`,
-                    `ACTIVO INFORMATICO: ${fila.cells[2].innerText}`,
-                    `PRESTAMISTA: ${fila.cells[3].innerText}`,
-                    `PRESTADOR: ${fila.cells[4].innerText}`,
-                    `FECHA DE PRESTAMO: ${fila.cells[5].innerText}`,
-                    `FECHA DE DEVOLUCION: ${fila.cells[6].innerText}`,
-                    `OBSERVACIONES: ${fila.cells[7].innerText}`,
-                    `ESTADO: ${fila.cells[8].innerText}`,
-                ];
-
-                // Crear el PDF
-                const {
-                    jsPDF
-                } = window.jspdf;
-                const doc = new jsPDF();
-
-                // Agregar título
-                doc.setFontSize(16);
-                doc.text('REPORTE DE PRESTAMO - ', 20, 20);
-
-                // Configurar márgenes y ancho máximo
-                const marginX = 20; // Margen izquierdo
-                const maxWidth = 160; // Ancho máximo para el texto
-                let y = 40; // Coordenada Y inicial (ajustada para dejar espacio suficiente debajo del título)
-
-                // Agregar los datos al PDF con alineación y separación adecuada
-                doc.setFontSize(12); // Tamaño de letra
-                datos.forEach((linea) => {
-                    const partes = linea.split(':'); // Dividir el texto en "Etiqueta" y "Valor"
-                    const etiqueta = partes[0] + ':'; // Parte antes de ":"
-                    const valor = partes.slice(1).join(':').trim(); // Parte después de ":"
-
-                    // Escribir la etiqueta
-                    doc.text(etiqueta, marginX, y);
-
-                    // Escribir el valor con ajuste de líneas largas
-                    const lineasAjustadas = doc.splitTextToSize(valor, maxWidth - 50); // Ajuste de líneas largas
-                    doc.text(lineasAjustadas, marginX + 60, y); // Sangría para el valor
-
-                    // Incrementar Y según el número de líneas ajustadas
-                    y += lineasAjustadas.length * 7; // Altura dinámica según las líneas usadas
-                    y += 2; // Espaciado adicional para separar cada campo
-                });
-
-                // Descargar el PDF
-                doc.save(`reporte_prestamo_${fila.rowIndex}.pdf`);
-            });
-        });
-    });
-</script>
 
 
 
 
-<script src="{{asset ('assets/js/equipos-informaticos.js')}}"></script>
+
+<script src="{{asset ('assets/js/activos-scripts.js')}}"></script>
 <script src="{{asset ('assets/js/inputs-validations-componentes.js')}}"></script>
 
 @endpush

@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
 
         // PASO 3.
         // Llamamos al seeder creado
+        
+        
+        
         $this->call(CategoriaSeeder::class);
         $this->call(AreasSeeder::class);
         $this->call(PermissionSeeder::class);

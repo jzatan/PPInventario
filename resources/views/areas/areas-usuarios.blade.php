@@ -25,13 +25,13 @@
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="nombre_area">NOMBRE AREA</label>
-                                <input type="text" class="form-control" name="nombre_area" id="nombre_area" title="Solo alfanumericos" placeholder="Ingrese el nombre del area" oninput="" required>
+                                <input type="text" class="form-control" name="nombre_area" id="nombre_area" title="Solo alfanumericos" placeholder="Ingrese el nombre del area" oninput="nombre_areas(this)" required>
                             </div>
                         </div>
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="ubicacion"> UBICACION</label>
-                                <textarea class="form-control" rows="4" name="ubicacion" id="ubicacion" title="Solo alfanumericos" placeholder="Detallar ubicación del area"></textarea>
+                                <textarea class="form-control" rows="4" name="ubicacion" id="ubicacion" title="Solo alfanumericos" placeholder="Detallar ubicación del area" oninput="nombre_areas(this)"></textarea>
                             </div>
                         </div>
                         <div class="form-group row mb-sm-0">
@@ -127,13 +127,13 @@
                                         <div class="form-group row mb-sm-0">
                                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                                 <label for="nombre_area">NOMBRE DEL AREA</label>
-                                                <input type="text" class="form-control" name="nombre_area" id="nombre_area" title="Solo alfanumericos" placeholder="Ingrese el nombre del area" oninput="" value="{{$area -> nombre_area}}" required>
+                                                <input type="text" class="form-control" name="nombre_area" id="nombre_area" title="Solo alfanumericos" placeholder="Ingrese el nombre del area"  value="{{$area -> nombre_area}}" oninput="nombre_areas(this)" required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-sm-0">
                                             <label for="ubicacion">UBICACIÓN</label>
                                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
-                                                <textarea class="form-control" rows="4" name="ubicacion" id="ubicacion" title="Solo alfanumericos" placeholder="Detallar ubicación del area">{{$area -> ubicacion}}</textarea>
+                                                <textarea class="form-control" rows="4" name="ubicacion" id="ubicacion" title="Solo alfanumericos" placeholder="Detallar ubicación del area" oninput="nombre_areas(this)">{{$area -> ubicacion}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12 pl-1">
@@ -178,5 +178,5 @@
 @endsection
 
 @push('js')
-
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 @endpush
