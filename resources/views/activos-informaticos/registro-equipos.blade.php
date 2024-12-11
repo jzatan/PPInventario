@@ -45,7 +45,7 @@
                             <div class="form-group col-sm-4">
                                 <label for="cod_registro"> CODIGO DE REGISTRO</label>
                                 <input type="text" class="form-control text-center" id="cod_registro" name="cod_registro" title="solo números" placeholder="INGRESE COD. REGISTRO" required oninput="solo_numeros(this)">
-                                <div id="codregistroMessage" class="invalid-feedback"></div>
+                                <small id="codregistroFeedback" class="text-danger"></small>
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="ord_compra"> ORDEN DE COMPRA</label>
@@ -157,6 +157,39 @@
         categoriaSelect.addEventListener('change', toggleButton);
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Detectar cambios en el campo de entrada
+        $('#cod_registro').on('input', function() {
+            let cod_registro = $(this).val(); // Obtener el valor del input
+            let feedback = $('#codregistroFeedback'); // Mensaje de feedback
+
+            if (cod_registro) { // Si el campo no está vacío
+                $.ajax({
+                    url: "{{ route('verificarcodigoregistro') }}", // Ruta para la verificación
+                    method: "POST", // Método HTTP
+                    data: {
+                        cod_registro: cod_registro, // Enviar cod_registro
+                        _token: "{{ csrf_token() }}" // Token CSRF
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            feedback.text('El cod. registro ya está registrado.').addClass('text-danger');
+                        } else {
+                            feedback.text('').removeClass('text-danger');
+                        }
+                    },
+                    error: function() {
+                        feedback.text('Error al verificar el cod. registro.').addClass('text-danger');
+                    }
+                });
+            } else {
+                feedback.text(''); // Si está vacío, limpia el mensaje
+            }
+        });
+    });
+</script>
+
 
 
 

@@ -182,10 +182,21 @@ class equipoController extends Controller
 
     // Funcion que me permitira validar en tiempo real si el cod_registro existe
 
-    public function verificarcodregistro(Request $request)
+    /*public function verificarcodregistro(Request $request)
     {
         $codregistro = $request->query('cod_registro');
         $exists = equipo::where('cod_registro', $codregistro)->exists();
         return response()->json(['exists' => $exists]);
+    }*/
+
+    // Funcion que me permitira validar en tiempo real si el cod_registro existe
+    public function verificarcodigoregistro(Request $request)
+    {
+        $cod_registro = $request->input('cod_registro');
+        // Verifica si el email existe en la base de datos
+        $exists = equipo::where('cod_registro', $cod_registro)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
+
 }

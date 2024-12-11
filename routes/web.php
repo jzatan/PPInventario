@@ -48,6 +48,11 @@ Route::get('/verificar-codregistro', [equipoController::class, 'verificarcodregi
 // Ruta para verificar en tiempo real el correo registrado mediante AJAX
 Route::post('/verificar-email', [UserController::class, 'verificaremail'])->name('verificaremail');
 
+// Ruta para verificar en tiempo real si el codigo de registro registrado mediante ajax
+Route::post('/verificar-codigoregistro', [equipoController::class, 'verificarcodigoregistro'])->name('verificarcodigoregistro');
+
+
+
 
 
 Route::get('/carnicero', function () {

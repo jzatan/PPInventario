@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('marca', 30);
             $table->string('modelo', 30);
             $table->string('color',30);
-            $table->string('cod_registro', 20);
+            $table->string('cod_registro', 20)->unique();
             $table->string('ord_compra',30)->nullable();
             $table->string('nro_serie', 20);
             $table->date('fecha_adquision');
