@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombres', 80);
             $table->string('apellidos', 80);
-            $table->string('dni', 8);
+            $table->string('dni', 8)->unique();
             $table->string('telefono', 15);
             $table->string('correo', 40);
             $table->tinyInteger('estado')->default(1);

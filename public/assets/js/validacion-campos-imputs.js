@@ -84,3 +84,38 @@ function observaciones(input) {
     input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
 
 }
+
+function observaciones_prestamos(input) {
+    // Permitir solo letras y espacios
+    //Linea de codigo en el imput:  oninput="??(this)"
+    input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
+
+}
+
+function codprestamo(input) {
+    // Permitir solo letras y espacios
+    //Linea de codigo en el imput:  oninput="??(this)"
+    input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
+
+}
+
+function problemas(input) {
+    // Permitir solo letras y espacios
+    //Linea de codigo en el imput:  oninput="??(this)"
+    input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
+
+}
+
+function diagnosticos_prestamo(input) {
+    // Permitir solo letras y espacios
+    //Linea de codigo en el imput:  oninput="??(this)"
+    input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
+
+}
+
+function observaciones_mantenimiento(input) {
+    // Permitir solo letras y espacios
+    //Linea de codigo en el imput:  oninput="??(this)"
+    input.value = input.value.replace(/[^a-zA-Z0-9\s._-]|[<>?¿]/g, '');
+
+}

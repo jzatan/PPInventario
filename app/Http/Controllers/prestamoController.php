@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\DB;
 
 class prestamoController extends Controller
 {
-    
-    function __construct() {
 
-        $this->middleware('permission:ver-prestamos',['only'=>['index']]);
-        $this->middleware('permission:create-prestamos',['only'=>['store']]);
-        $this->middleware('permission:store-prestamos',['only'=>['store']]);
-        $this->middleware('permission:edit-prestamos',['only'=>['update']]);
-        $this->middleware('permission:update-prestamos',['only'=>['update']]);
-        $this->middleware('permission:delete-prestamos',['only'=>['destroy']]);
+    function __construct()
+    {
 
+        $this->middleware('permission:ver-prestamos', ['only' => ['index']]);
+        $this->middleware('permission:create-prestamos', ['only' => ['store']]);
+        $this->middleware('permission:store-prestamos', ['only' => ['store']]);
+        $this->middleware('permission:edit-prestamos', ['only' => ['update']]);
+        $this->middleware('permission:update-prestamos', ['only' => ['update']]);
+        $this->middleware('permission:delete-prestamos', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -38,11 +38,10 @@ class prestamoController extends Controller
 
 
         $prestamos = Prestamo::where('estado', 0)
-                     ->whereHas('equipos', function ($query) use ($idAreaUsuario) {
-                         $query->where('area_id', $idAreaUsuario);
-                     })
-                     ->get();
-        //$prestamos = prestamo::get();
+            ->whereHas('equipos', function ($query) use ($idAreaUsuario) {
+                $query->where('area_id', $idAreaUsuario);
+            })->get();
+
         $equipos = equipo::where('area_id', $idAreaUsuario)->get(); //??
         $componentes = componente::with('equipos')->get();
         return view('prestamos.control-prestamos', compact('componentes', 'equipos', 'prestamos'));
@@ -190,5 +189,14 @@ class prestamoController extends Controller
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error en la devolución']);
         }
+    }
+
+    public function verificarcodprestamo(Request $request)
+    {
+        $cod_prestamo = $request->input('cod_prestamo');
+        // Verifica si el cod_prestamo existe en la base de datos
+        $exists = prestamo::where('cod_prestamo', $cod_prestamo)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 }

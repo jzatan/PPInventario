@@ -52,15 +52,15 @@
 
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="problema"> PROBLEMA</label>
-                                <textarea class="form-control" name="problema" id="problema" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL PROBLEMA">{{$mantenimiento -> mantenimiento_detalle -> problema}}</textarea>
+                                <textarea class="form-control" name="problema" id="problema" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL PROBLEMA" oninput="problemas(this)">{{$mantenimiento -> mantenimiento_detalle -> problema}}</textarea>
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="diagnostico"> DIAGNOSTICO</label>
-                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL DIAGNOSTICO">{{$mantenimiento -> mantenimiento_detalle -> diagnostico}}</textarea>
+                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL DIAGNOSTICO" oninput="diagnosticos_prestamo(this)">{{$mantenimiento -> mantenimiento_detalle -> diagnostico}}</textarea>
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="observaciones"> OBSERVACIONES</label>
-                                <textarea class="form-control" name="observaciones" id="observaciones" rows="4" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES">{{$mantenimiento -> mantenimiento_detalle -> observaciones}}</textarea>
+                                <textarea class="form-control" name="observaciones" id="observaciones" rows="4" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES" oninput="observaciones_mantenimiento(this)">{{$mantenimiento -> mantenimiento_detalle -> observaciones}}</textarea>
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="estado_mantenimiento">ESTADO DE MANTENIMIENTO</label>
@@ -100,5 +100,20 @@
 @endsection
 
 @push('js')
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+
+        // Configurar fecha mínima en el input de fecha de devolución
+        const fechaDevolucion = document.getElementById('fecha_retorno');
+        fechaDevolucion.min = today;
+
+        // Actualizar la fecha mínima de devolución al seleccionar la fecha de préstamo (aunque es fija en este caso)
+        fechaPrestamo.addEventListener('change', function() {
+            fechaDevolucion.min = fechaPrestamo.value;
+        });
+    });
+</script>
 
 @endpush

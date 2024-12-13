@@ -51,6 +51,12 @@ Route::post('/verificar-email', [UserController::class, 'verificaremail'])->name
 // Ruta para verificar en tiempo real si el codigo de registro registrado mediante ajax
 Route::post('/verificar-codigoregistro', [equipoController::class, 'verificarcodigoregistro'])->name('verificarcodigoregistro');
 
+// Ruta para verificar en tiempo real si el DNI registrado mediante ajax
+Route::post('/verificar-dni', [usuarioController::class, 'verificardni'])->name('verificardni');
+
+// Ruta para verificar en tiempo real si el cod_prestamo registrado mediante ajax
+Route::post('/verificar-codprestamo', [prestamoController::class, 'verificarcodprestamo'])->name('verificarcodprestamo');
+
 
 
 

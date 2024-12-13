@@ -151,4 +151,13 @@ class usuarioController extends Controller
         return response() -> json(['exists' => $exists]);
 
     }
+ 
+    public function verificardni(Request $request)
+    {
+        $dni = $request->input('dni');
+        // Verifica si el dni existe en la base de datos
+        $exists = usuario::where('dni', $dni)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
 }

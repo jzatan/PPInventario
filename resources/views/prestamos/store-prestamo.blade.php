@@ -27,7 +27,8 @@
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="cod_prestamo"> COD. PRESTAMO</label>
-                                <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" required >
+                                <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" oninput="codprestamo(this)" required >
+                                <small id="codprestamoFeedback" class="text-danger"></small>
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="id_prestario">PRESTAMISTA</label>
@@ -47,11 +48,11 @@
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="fecha_prestamo"> FECHA PRESTAMO</label>
-                                <input type="date" class="form-control" name="fecha_prestamo" id="fecha_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" required >
+                                <input type="date" class="form-control" name="fecha_prestamo" id="fecha_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos"   required >
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="fecha_devolucion"> FECHA DEVOLUCION</label>
-                                <input type="date" class="form-control" name="fecha_devolucion" id="fecha_devolucion" placeholder="COD. PRESTAMO" title="Solo alfanumericos" required >
+                                <input type="date" class="form-control" name="fecha_devolucion" id="fecha_devolucion" placeholder="COD. PRESTAMO" title="Solo alfanumericos"  required >
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="estado">ESTADO</label>
@@ -61,13 +62,10 @@
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="observaciones"> OBSERVACIONES</label>
-                                <textarea class="form-control" name="observaciones" id="observaciones" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES"></textarea>
+                                <textarea class="form-control"  oninput="observaciones_prestamos(this)" name="observaciones" id="observaciones" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES"></textarea>
                             </div>
 
                         </div>
-
-
-
                         <div class="form-group row mb-sm-0">
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <hr>
@@ -89,6 +87,7 @@
 @endsection
 
 @push('js')
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const today = new Date().toISOString().split('T')[0];
@@ -105,6 +104,39 @@
         // Actualizar la fecha mínima de devolución al seleccionar la fecha de préstamo (aunque es fija en este caso)
         fechaPrestamo.addEventListener('change', function() {
             fechaDevolucion.min = fechaPrestamo.value;
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Detectar cambios en el campo de entrada
+        $('#cod_prestamo').on('input', function() {
+            let cod_prestamo = $(this).val(); // Obtener el valor del input
+            let feedback = $('#codprestamoFeedback'); // Mensaje de feedback
+
+            if (cod_prestamo) { // Si el campo no está vacío
+                $.ajax({
+                    url: "{{ route('verificarcodprestamo') }}", // Ruta para la verificación
+                    method: "POST", // Método HTTP
+                    data: {
+                        cod_prestamo: cod_prestamo, // Enviar cod_registro
+                        _token: "{{ csrf_token() }}" // Token CSRF
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            feedback.text('El cod. prestamo ya está registrado.').addClass('text-danger');
+                        } else {
+                            feedback.text('').removeClass('text-danger');
+                        }
+                    },
+                    error: function() {
+                        feedback.text('Error al verificar el cod. prestamo').addClass('text-danger');
+                    }
+                });
+            } else {
+                feedback.text(''); // Si está vacío, limpia el mensaje
+            }
         });
     });
 </script>

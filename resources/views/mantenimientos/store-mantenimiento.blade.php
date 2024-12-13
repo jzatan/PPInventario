@@ -53,15 +53,15 @@
 
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="problema"> PROBLEMA</label>
-                                <textarea class="form-control" name="problema" id="problema" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL PROBLEMA"></textarea>
+                                <textarea class="form-control" name="problema" id="problema" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL PROBLEMA" oninput="problemas(this)"></textarea>
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="diagnostico"> DIAGNOSTICO</label>
-                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL DIAGNOSTICO"></textarea>
+                                <textarea class="form-control" name="diagnostico" id="diagnostico" rows="4" title="Solo alfanumericos" placeholder="DETALLAR EL DIAGNOSTICO" oninput="diagnosticos_prestamo(this)"></textarea>
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="observaciones"> OBSERVACIONES</label>
-                                <textarea class="form-control" name="observaciones" id="observaciones" rows="4" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES"></textarea>
+                                <textarea class="form-control" name="observaciones" id="observaciones" rows="4" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES" oninput="observaciones_mantenimiento(this)"></textarea>
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="estado_mantenimiento">ESTADO DE MANTENIMIENTO</label>
@@ -101,6 +101,7 @@
 @endsection
 
 @push('js')
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const today = new Date().toISOString().split('T')[0];

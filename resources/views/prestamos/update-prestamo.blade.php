@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group col-sm-4 mb-3 mb-sm-3">
                                 <label for="cod_prestamo"> COD. PRESTAMO</label>
-                                <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" value="{{$prestamo -> cod_prestamo ?? ''}}" required>
+                                <input type="text" class="form-control" name="cod_prestamo" id="cod_prestamo" placeholder="COD. PRESTAMO" title="Solo alfanumericos" value="{{$prestamo -> cod_prestamo ?? ''}}" oninput="codprestamo(this)" required>
                             </div>
                             <div class="form-group col-sm-6 mb-3 mb-sm-3">
                                 <label for="id_prestario">PRESTAMISTA</label>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group col-sm-12 mb-3 mb-sm-3">
                                 <label for="observaciones"> OBSERVACIONES</label>
-                                <textarea class="form-control" name="observaciones" id="observaciones" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES">{{$prestamo -> observaciones ?? 'SIN OBSERVACIONES'}}</textarea>
+                                <textarea class="form-control" name="observaciones" id="observaciones" title="Solo alfanumericos" placeholder="DETALLAR OBSERVACIONES" oninput="observaciones_prestamos(this)">{{$prestamo -> observaciones ?? 'SIN OBSERVACIONES'}}</textarea>
                             </div>
 
                         </div>
@@ -112,6 +112,7 @@
         });
     });
 </script>
+<script src="{{asset ('assets/js/validacion-campos-imputs.js')}}"></script>
 
 
 @endpush
